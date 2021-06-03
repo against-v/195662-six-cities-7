@@ -1,7 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function App() {
-  return <p>Hello, world!</p>;
+import Home from '../home/home';
+
+function App({placeCount}) {
+  return (
+    <Home
+      placeCount={placeCount}
+    />
+  );
+
 }
+
+App.propTypes = {
+  placeCount: PropTypes.number.isRequired,
+};
 
 export default App;
