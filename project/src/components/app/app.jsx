@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Home from '../home/home';
+import MainScreen from '../main-screen/main-screen';
 
 function App({placeCount}) {
   return (
-    <Home
+    <MainScreen
       placeCount={placeCount}
     />
   );
