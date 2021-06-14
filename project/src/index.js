@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
+import offers from './mocks/offers';
 
-const placeCount = 123;
+const offerCount = 123;
 
 ReactDOM.render(
   <React.StrictMode>
     <App
-      placeCount={placeCount}
+      offerCount={offerCount}
+      offers={offers}
     />
   </React.StrictMode>,
   document.getElementById('root'),

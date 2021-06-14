@@ -1,6 +1,11 @@
 import React from 'react';
 
+// import cardOfferProp from './offer-card.prop';
+
 function OfferCard() {
+  // const {
+  //   isPremium,
+  // } = offer;
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
@@ -38,5 +43,9 @@ function OfferCard() {
     </article>
   );
 }
+
+// OfferCard.propTypes = {
+//   offer: cardOfferProp,
+// };
 
 export default OfferCard;

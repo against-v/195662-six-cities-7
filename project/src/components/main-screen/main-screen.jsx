@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import OfferCard from '../offer-card/offer-card';
 
-function MainScreen({placeCount}) {
+function MainScreen({offerCount}) {
   const offerCards = [
     {
       id: 1,
@@ -94,7 +94,7 @@ function MainScreen({placeCount}) {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placeCount} places to stay in Amsterdam</b>
+              <b className="places__found">{offerCount} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0">
@@ -127,7 +127,7 @@ function MainScreen({placeCount}) {
 }
 
 MainScreen.propTypes = {
-  placeCount: PropTypes.number.isRequired,
+  offerCount: PropTypes.number.isRequired,
 };
 
 export default MainScreen;
