@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import PlaceCard from '../place-card/place-card';
+import OfferCard from '../offer-card/offer-card';
 
 function MainScreen({placeCount}) {
-  const placeCards = [
+  const offerCards = [
     {
       id: 1,
     },
@@ -112,7 +112,7 @@ function MainScreen({placeCount}) {
               </form>
               <div className="cities__places-list places__list tabs__content">
                 {
-                  placeCards.map((item) => <PlaceCard key={item.id}/>)
+                  offerCards.map((item) => <OfferCard key={item.id}/>)
                 }
               </div>
             </section>

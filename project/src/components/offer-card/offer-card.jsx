@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PlaceCard() {
+function OfferCard() {
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
@@ -39,4 +39,4 @@ function PlaceCard() {
   );
 }
 
-export default PlaceCard;
+export default OfferCard;
