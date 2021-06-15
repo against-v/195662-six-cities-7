@@ -1,20 +1,21 @@
 import React from 'react';
 
 import OfferCard from '../offer-card/offer-card';
+import PropTypes from 'prop-types';
+import cardOfferProp from '../offer-card/offer-card.prop';
 
-function OfferList({offerCount}) {
+function OffersList({offersCount, offers}) {
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">{offerCount} places to stay in Amsterdam</b>
+      <b className="places__found">{offersCount} places to stay in Amsterdam</b>
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by</span>
-        <span className="places__sorting-type" tabIndex="0">
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
+        <span className="places__sorting-type" tabIndex="0"> Popular
+          <svg className="places__sorting-arrow" width="7" height="4">
+            <use xlinkHref="#icon-arrow-select"></use>
+          </svg>
+        </span>
         <ul className="places__options places__options--custom places__options--opened">
           <li className="places__option places__option--active" tabIndex="0">Popular</li>
           <li className="places__option" tabIndex="0">Price: low to high</li>
@@ -24,11 +25,21 @@ function OfferList({offerCount}) {
       </form>
       <div className="cities__places-list places__list tabs__content">
         {
-          offerCards.map((item) => <OfferCard key={item.id}/>)
+          offers.map((item) => (
+            <OfferCard
+              key={item.id}
+              offer={item}
+            />
+          ))
         }
       </div>
     </section>
   );
 }
 
-export default OfferList;
+OffersList.propTypes = {
+  offersCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(cardOfferProp).isRequired,
+};
+
+export default OffersList;

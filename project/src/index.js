@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import offers from './mocks/offers';
 
-const offerCount = 123;
+const offersCount = 123;
 
 ReactDOM.render(
   <React.StrictMode>
     <App
-      offerCount={offerCount}
+      offersCount={offersCount}
       offers={offers}
     />
   </React.StrictMode>,

@@ -10,18 +10,23 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import OfferScreen from '../offer-screen/offer-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
-function App({offerCount, offers}) {
+function App({offersCount, offers}) {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <MainScreen offerCount={offerCount}/>
+          <MainScreen
+            offersCount={offersCount}
+            offers={offers}
+          />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <LoginScreen/>
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesScreen/>
+          <FavoritesScreen
+            offers={offers}
+          />
         </Route>
         <Route exact path={AppRoute.DEV_OFFER}>
           <OfferScreen/>
@@ -35,7 +40,7 @@ function App({offerCount, offers}) {
 }
 
 App.propTypes = {
-  offerCount: PropTypes.number.isRequired,
+  offersCount: PropTypes.number.isRequired,
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
 };
 

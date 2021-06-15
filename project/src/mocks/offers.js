@@ -1,6 +1,7 @@
 const offers = [
   {
     id: 1,
+    city: 'Amsterdam',
     isPremium: true,
     images: [
       'apartment-01.jpg',
@@ -19,6 +20,7 @@ const offers = [
   },
   {
     id: 2,
+    city: 'Hamburg',
     isPremium: false,
     images: [
       'apartment-02.jpg',
@@ -37,6 +39,7 @@ const offers = [
   },
   {
     id: 3,
+    city: 'Paris',
     isPremium: false,
     images: [
       'apartment-03.jpg',
@@ -47,7 +50,7 @@ const offers = [
       'apartment-03.jpg',
     ],
     price: 80,
-    rating: 5,
+    rating: 4.7,
     title: 'Canal View Prinsengracht',
     type: 'Private room',
     bedroomCount: 1,
@@ -55,6 +58,7 @@ const offers = [
   },
   {
     id: 4,
+    city: 'Brussels',
     isPremium: true,
     images: [
       'room.jpg',
