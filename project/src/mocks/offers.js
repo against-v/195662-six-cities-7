@@ -3,6 +3,7 @@ const offers = [
     id: 1,
     city: 'Amsterdam',
     isPremium: true,
+    isFavorite: true,
     images: [
       'apartment-01.jpg',
       'apartment-01.jpg',
@@ -22,6 +23,7 @@ const offers = [
     id: 2,
     city: 'Hamburg',
     isPremium: false,
+    isFavorite: true,
     images: [
       'apartment-02.jpg',
       'apartment-02.jpg',
@@ -41,6 +43,7 @@ const offers = [
     id: 3,
     city: 'Paris',
     isPremium: false,
+    isFavorite: false,
     images: [
       'apartment-03.jpg',
       'apartment-03.jpg',
@@ -60,6 +63,7 @@ const offers = [
     id: 4,
     city: 'Brussels',
     isPremium: true,
+    isFavorite: false,
     images: [
       'room.jpg',
       'room.jpg',

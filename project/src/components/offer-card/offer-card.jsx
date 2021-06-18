@@ -5,10 +5,11 @@ import cardOfferProp from './offer-card.prop';
 
 const STARS_COUNT = 5;
 
-function OfferCard({offer, mouseEventHandler}) {
+function OfferCard({offer, mouseEventHandler, isHorizontal}) {
   const {
     id,
     isPremium,
+    isFavorite,
     images,
     title,
     price,
@@ -26,7 +27,7 @@ function OfferCard({offer, mouseEventHandler}) {
 
   return (
     <article
-      className="cities__place-card place-card"
+      className={`${isHorizontal ? "favorites__card" : "cities__place-card"} place-card`}
       onMouseEnter={() => handleMouseEvent(id)}
       onMouseLeave={() => handleMouseEvent(null)}
     >
@@ -35,9 +36,17 @@ function OfferCard({offer, mouseEventHandler}) {
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div
+        className={`${isHorizontal ? "favorites__image-wrapper" : "cities__image-wrapper"} place-card__image-wrapper`}
+      >
         <a href="/">
-          <img className="place-card__image" src={`img/${image}`} width="260" height="200" alt="Place"/>
+          <img
+            className="place-card__image"
+            src={`img/${image}`}
+            width={isHorizontal ? "150" : "260"}
+            height={isHorizontal ? "110" : "200"}
+            alt="Place"
+          />
         </a>
       </div>
       <div className="place-card__info">
@@ -46,7 +55,10 @@ function OfferCard({offer, mouseEventHandler}) {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button
+            className={`${isFavorite ? "place-card__bookmark-button--active" : ""} place-card__bookmark-button button`}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -71,6 +83,9 @@ function OfferCard({offer, mouseEventHandler}) {
 OfferCard.propTypes = {
   offer: cardOfferProp,
   mouseEventHandler: PropTypes.func,
+  isHorizontal: PropTypes.bool,
 };
+OfferCard.de
+
 
 export default OfferCard;
