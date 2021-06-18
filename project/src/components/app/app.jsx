@@ -28,7 +28,7 @@ function App({offersCount, offers}) {
             offers={offers}
           />
         </Route>
-        <Route exact path={AppRoute.DEV_OFFER}>
+        <Route exact path={AppRoute.OFFER}>
           <OfferScreen/>
         </Route>
         <Route>

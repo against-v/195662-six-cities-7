@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import cardOfferProp from './offer-card.prop';
@@ -39,7 +40,7 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
       <div
         className={`${isHorizontal ? "favorites__image-wrapper" : "cities__image-wrapper"} place-card__image-wrapper`}
       >
-        <a href="/">
+        <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
             src={`img/${image}`}
@@ -47,7 +48,7 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
             height={isHorizontal ? "110" : "200"}
             alt="Place"
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -72,7 +73,7 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{title}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
