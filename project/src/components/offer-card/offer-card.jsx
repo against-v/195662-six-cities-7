@@ -28,7 +28,7 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
 
   return (
     <article
-      className={`${isHorizontal ? "favorites__card" : "cities__place-card"} place-card`}
+      className={`${isHorizontal ? 'favorites__card' : 'cities__place-card'} place-card`}
       onMouseEnter={() => handleMouseEvent(id)}
       onMouseLeave={() => handleMouseEvent(null)}
     >
@@ -38,14 +38,14 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
         </div>
       )}
       <div
-        className={`${isHorizontal ? "favorites__image-wrapper" : "cities__image-wrapper"} place-card__image-wrapper`}
+        className={`${isHorizontal ? 'favorites__image-wrapper' : 'cities__image-wrapper'} place-card__image-wrapper`}
       >
         <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
             src={`img/${image}`}
-            width={isHorizontal ? "150" : "260"}
-            height={isHorizontal ? "110" : "200"}
+            width={isHorizontal ? '150' : '260'}
+            height={isHorizontal ? '110' : '200'}
             alt="Place"
           />
         </Link>
@@ -57,7 +57,7 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={`${isFavorite ? "place-card__bookmark-button--active" : ""} place-card__bookmark-button button`}
+            className={`${isFavorite ? 'place-card__bookmark-button--active' : ''} place-card__bookmark-button button`}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -86,7 +86,5 @@ OfferCard.propTypes = {
   mouseEventHandler: PropTypes.func,
   isHorizontal: PropTypes.bool,
 };
-OfferCard.de
-
 
 export default OfferCard;

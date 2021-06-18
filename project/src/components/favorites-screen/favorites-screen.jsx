@@ -1,5 +1,8 @@
 import React from 'react';
-import OfferCard from "../offer-card/offer-card";
+import PropTypes from 'prop-types';
+
+import OfferCard from '../offer-card/offer-card';
+import cardOfferProp from '../offer-card/offer-card.prop';
 
 function FavoritesScreen({offers}) {
   return (
@@ -51,7 +54,7 @@ function FavoritesScreen({offers}) {
                       <OfferCard
                         key={item.id}
                         offer={item}
-                        isHorizontal={true}
+                        isHorizontal
                       />
                     ))
                   }
@@ -69,5 +72,9 @@ function FavoritesScreen({offers}) {
     </div>
   );
 }
+
+FavoritesScreen.propTypes = {
+  offers: PropTypes.arrayOf(cardOfferProp).isRequired,
+};
 
 export default FavoritesScreen;
