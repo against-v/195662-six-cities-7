@@ -1,11 +1,13 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
 import cardOfferProp from './offer-card.prop';
 
 const STARS_COUNT = 5;
 
-function OfferCard({offer}) {
+function OfferCard({offer, mouseEventHandler}) {
   const {
+    id,
     isPremium,
     images,
     title,
@@ -16,13 +18,23 @@ function OfferCard({offer}) {
   const image = images[0];
   const percentageRating = 100 / STARS_COUNT * rating;
 
+  const handleMouseEvent = (cardValue) => {
+    if (mouseEventHandler) {
+      mouseEventHandler(cardValue);
+    }
+  };
+
   return (
-    <article className="cities__place-card place-card">
-      {isPremium &&
+    <article
+      className="cities__place-card place-card"
+      onMouseEnter={() => handleMouseEvent(id)}
+      onMouseLeave={() => handleMouseEvent(null)}
+    >
+      {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
-      }
+      )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/">
           <img className="place-card__image" src={`img/${image}`} width="260" height="200" alt="Place"/>
@@ -58,6 +70,7 @@ function OfferCard({offer}) {
 
 OfferCard.propTypes = {
   offer: cardOfferProp,
+  mouseEventHandler: PropTypes.func,
 };
 
 export default OfferCard;
