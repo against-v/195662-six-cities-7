@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 
 import OffersList from '../offers-list/offers-list';
 import cardOfferProp from '../offer-card/offer-card.prop';
+import InteractiveMap from '../interactive-map/interactive-map';
+
+const city = {
+  latitude: 52.38333,
+  longitude: 4.9,
+  zoom: 10,
+};
 
 function MainScreen({offersCount, offers}) {
   return (
@@ -81,7 +88,10 @@ function MainScreen({offersCount, offers}) {
             />
             <div className="cities__right-section">
               <section className="cities__map map">
-
+                <InteractiveMap
+                  points={offers}
+                  defaultLocation={city}
+                />
               </section>
             </div>
           </div>
