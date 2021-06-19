@@ -4,3 +4,8 @@ export const AppRoute = {
   FAVORITES: '/favorites',
   OFFER: '/offer/:id',
 };
+
+export const UrlMapPin = {
+  DEFAULT: 'img/pin.svg',
+  ACTIVE: 'img/pin-active.svg',
+};
