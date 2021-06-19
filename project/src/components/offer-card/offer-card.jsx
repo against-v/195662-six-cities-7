@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, generatePath} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 import PropTypes from 'prop-types';
 import cardOfferProp from './offer-card.prop';
@@ -40,7 +41,7 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
       <div
         className={`${isHorizontal ? 'favorites__image-wrapper' : 'cities__image-wrapper'} place-card__image-wrapper`}
       >
-        <Link to={`/offer/${id}`}>
+        <Link to={generatePath(AppRoute.OFFER, {id})}>
           <img
             className="place-card__image"
             src={`img/${image}`}
@@ -73,7 +74,8 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{title}</Link>
+          {/*<Link to={`/offer/${id}`}>{title}</Link>*/}
+          <Link to={generatePath(AppRoute.OFFER, {id})}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
