@@ -74,7 +74,6 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
           </div>
         </div>
         <h2 className="place-card__name">
-          {/*<Link to={`/offer/${id}`}>{title}</Link>*/}
           <Link to={generatePath(AppRoute.OFFER, {id})}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
