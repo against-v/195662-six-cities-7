@@ -74,10 +74,18 @@ function MainScreen({offersCount, offers}) {
           </section>
         </div>
         <div className="cities">
-          <OffersList
-            offersCount={offersCount}
-            offers={offers}
-          />
+          <div className="cities__places-container container">
+            <OffersList
+              offersCount={offersCount}
+              offers={offers}
+            />
+            <div className="cities__right-section">
+              <section className="cities__map map">
+
+              </section>
+            </div>
+          </div>
+
         </div>
       </main>
     </div>

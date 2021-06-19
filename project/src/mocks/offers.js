@@ -18,6 +18,11 @@ const offers = [
     type: 'Apartment',
     bedroomCount: 2,
     adultMaxCount: 4,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 8,
+    },
   },
   {
     id: 2,
@@ -38,6 +43,11 @@ const offers = [
     type: 'Private room',
     bedroomCount: 1,
     adultMaxCount: 1,
+    location: {
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
+      zoom: 8,
+    },
   },
   {
     id: 3,
@@ -58,6 +68,11 @@ const offers = [
     type: 'Private room',
     bedroomCount: 1,
     adultMaxCount: 2,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 8,
+    },
   },
   {
     id: 4,
@@ -78,6 +93,11 @@ const offers = [
     type: 'Apartment',
     bedroomCount: 4,
     adultMaxCount: 8,
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 8,
+    },
   },
 ];
 
