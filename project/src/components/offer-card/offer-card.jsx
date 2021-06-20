@@ -4,8 +4,7 @@ import {AppRoute} from '../../const';
 
 import PropTypes from 'prop-types';
 import cardOfferProp from './offer-card.prop';
-
-const STARS_COUNT = 5;
+import Rating from '../rating/rating';
 
 function OfferCard({offer, mouseEventHandler, isHorizontal}) {
   const {
@@ -19,7 +18,6 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
     type,
   } = offer;
   const image = images[0];
-  const percentageRating = 100 / STARS_COUNT * rating;
 
   const handleMouseEvent = (cardValue) => {
     if (mouseEventHandler) {
@@ -68,10 +66,10 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
           </button>
         </div>
         <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{width: `${percentageRating}%`}}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
+          <Rating
+            className="place-card__stars"
+            rating={rating}
+          />
         </div>
         <h2 className="place-card__name">
           <Link to={generatePath(AppRoute.OFFER, {id})}>{title}</Link>
