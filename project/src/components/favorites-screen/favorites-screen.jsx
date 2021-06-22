@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import OfferCard from '../offer-card/offer-card';
 import cardOfferProp from '../offer-card/offer-card.prop';
+import OfferCardFavorites from '../offer-card-favorites/offer-card-favorites';
 
 function FavoritesScreen({offers}) {
   return (
@@ -51,10 +51,9 @@ function FavoritesScreen({offers}) {
                 <div className="favorites__places">
                   {
                     offers.map((item) => (
-                      <OfferCard
+                      <OfferCardFavorites
                         key={item.id}
                         offer={item}
-                        isHorizontal
                       />
                     ))
                   }

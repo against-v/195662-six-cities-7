@@ -6,7 +6,15 @@ import PropTypes from 'prop-types';
 import cardOfferProp from './offer-card.prop';
 import Rating from '../rating/rating';
 
-function OfferCard({offer, mouseEventHandler, isHorizontal}) {
+function OfferCard(props) {
+  const {
+    offer,
+    mouseEventHandler,
+    className = 'cities__place-card',
+    imageWrapperClassName = 'cities__image-wrapper',
+    imageWidth = '260',
+    imageHeight = '200',
+  } = props;
   const {
     id,
     isPremium,
@@ -27,7 +35,7 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
 
   return (
     <article
-      className={`${isHorizontal ? 'favorites__card' : 'cities__place-card'} place-card`}
+      className={`${className} place-card`}
       onMouseEnter={() => handleMouseEvent(id)}
       onMouseLeave={() => handleMouseEvent(null)}
     >
@@ -37,14 +45,14 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
         </div>
       )}
       <div
-        className={`${isHorizontal ? 'favorites__image-wrapper' : 'cities__image-wrapper'} place-card__image-wrapper`}
+        className={`${imageWrapperClassName} place-card__image-wrapper`}
       >
         <Link to={generatePath(AppRoute.OFFER, {id})}>
           <img
             className="place-card__image"
             src={`img/${image}`}
-            width={isHorizontal ? '150' : '260'}
-            height={isHorizontal ? '110' : '200'}
+            width={imageWidth}
+            height={imageHeight}
             alt="Place"
           />
         </Link>
@@ -83,7 +91,10 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
 OfferCard.propTypes = {
   offer: cardOfferProp,
   mouseEventHandler: PropTypes.func,
-  isHorizontal: PropTypes.bool,
+  className: PropTypes.string,
+  imageWrapperClassName: PropTypes.string,
+  imageWidth: PropTypes.string,
+  imageHeight: PropTypes.string,
 };
 
 export default OfferCard;
