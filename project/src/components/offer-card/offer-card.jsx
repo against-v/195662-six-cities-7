@@ -4,10 +4,17 @@ import {AppRoute} from '../../const';
 
 import PropTypes from 'prop-types';
 import cardOfferProp from './offer-card.prop';
+import Rating from '../rating/rating';
 
-const STARS_COUNT = 5;
-
-function OfferCard({offer, mouseEventHandler, isHorizontal}) {
+function OfferCard(props) {
+  const {
+    offer,
+    mouseEventHandler,
+    className = 'cities__place-card',
+    imageWrapperClassName = 'cities__image-wrapper',
+    imageWidth = '260',
+    imageHeight = '200',
+  } = props;
   const {
     id,
     isPremium,
@@ -19,7 +26,6 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
     type,
   } = offer;
   const image = images[0];
-  const percentageRating = 100 / STARS_COUNT * rating;
 
   const handleMouseEvent = (cardValue) => {
     if (mouseEventHandler) {
@@ -29,7 +35,7 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
 
   return (
     <article
-      className={`${isHorizontal ? 'favorites__card' : 'cities__place-card'} place-card`}
+      className={`${className} place-card`}
       onMouseEnter={() => handleMouseEvent(id)}
       onMouseLeave={() => handleMouseEvent(null)}
     >
@@ -39,14 +45,14 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
         </div>
       )}
       <div
-        className={`${isHorizontal ? 'favorites__image-wrapper' : 'cities__image-wrapper'} place-card__image-wrapper`}
+        className={`${imageWrapperClassName} place-card__image-wrapper`}
       >
         <Link to={generatePath(AppRoute.OFFER, {id})}>
           <img
             className="place-card__image"
             src={`img/${image}`}
-            width={isHorizontal ? '150' : '260'}
-            height={isHorizontal ? '110' : '200'}
+            width={imageWidth}
+            height={imageHeight}
             alt="Place"
           />
         </Link>
@@ -68,10 +74,10 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
           </button>
         </div>
         <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{width: `${percentageRating}%`}}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
+          <Rating
+            className="place-card__stars"
+            rating={rating}
+          />
         </div>
         <h2 className="place-card__name">
           <Link to={generatePath(AppRoute.OFFER, {id})}>{title}</Link>
@@ -85,7 +91,10 @@ function OfferCard({offer, mouseEventHandler, isHorizontal}) {
 OfferCard.propTypes = {
   offer: cardOfferProp,
   mouseEventHandler: PropTypes.func,
-  isHorizontal: PropTypes.bool,
+  className: PropTypes.string,
+  imageWrapperClassName: PropTypes.string,
+  imageWidth: PropTypes.string,
+  imageHeight: PropTypes.string,
 };
 
 export default OfferCard;
