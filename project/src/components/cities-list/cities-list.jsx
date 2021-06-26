@@ -12,7 +12,7 @@ function CitiesList(props) {
     setCity,
   } = props;
 
-  const setActiveClass = (city) => city.name === currentCity.name ? 'tabs__item--active' : '';
+  const getActiveClass = (city) => city.name === currentCity.name ? 'tabs__item--active' : '';
   const handleClick = (e, city) => {
     e.preventDefault();
     setCity(city);
@@ -28,7 +28,7 @@ function CitiesList(props) {
               className="locations__item"
             >
               <a
-                className={`locations__item-link tabs__item ${setActiveClass(item)}`}
+                className={`locations__item-link tabs__item ${getActiveClass(item)}`}
                 onClick={(e) => handleClick(e, item)}
                 href="/"
               >
