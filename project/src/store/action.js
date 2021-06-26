@@ -1,4 +1,11 @@
 export const ActionType = {
   SET_CITY: 'setCity',
-  SET_OFFERS: 'setOffers',
 };
+
+export const ActionCreator = {
+  setCity: (payload) => ({
+    type: ActionType.SET_CITY,
+    payload,
+  }),
+};
+

@@ -44,8 +44,8 @@ const offers = [
     bedroomCount: 1,
     adultMaxCount: 1,
     location: {
-      latitude: 52.369553943508,
-      longitude: 4.85309666406198,
+      latitude: 53.530646,
+      longitude: 10.009526,
       zoom: 8,
     },
   },
@@ -69,8 +69,8 @@ const offers = [
     bedroomCount: 1,
     adultMaxCount: 2,
     location: {
-      latitude: 52.3909553943508,
-      longitude: 4.929309666406198,
+      latitude: 48.867366,
+      longitude: 2.349010,
       zoom: 8,
     },
   },
@@ -94,8 +94,8 @@ const offers = [
     bedroomCount: 4,
     adultMaxCount: 8,
     location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
+      latitude: 50.855147,
+      longitude: 4.379853,
       zoom: 8,
     },
   },
