@@ -16,7 +16,6 @@ function InteractiveMap({defaultLocation, points}) {
   useEffect(() => {
     const markers = leaflet.layerGroup();
     if (map) {
-      // const markers = leaflet.layerGroup().addTo(map);
       const defaultPin = leaflet.icon({
         iconUrl: UrlMapPin.DEFAULT,
         iconSize: [30, 30],
