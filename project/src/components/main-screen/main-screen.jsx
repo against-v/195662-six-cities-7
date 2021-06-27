@@ -8,12 +8,17 @@ import InteractiveMap from '../interactive-map/interactive-map';
 import locationProp from './location.prop';
 import CitiesList from '../cities-list/cities-list';
 
+import {sortOffers} from '../../utils';
+
 import {City} from '../../const';
+import Sorting from '../sorting/sorting';
+import sortTypeProp from '../sorting/sort-type.prop';
 
 function MainScreen(props) {
   const {
     city,
     offers,
+    sortType,
   } = props;
 
   return (
@@ -58,23 +63,10 @@ function MainScreen(props) {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offers.length} places to stay in {city.name}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex="0"> Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                  <li className="places__option" tabIndex="0">Price: low to high</li>
-                  <li className="places__option" tabIndex="0">Price: high to low</li>
-                  <li className="places__option" tabIndex="0">Top rated first</li>
-                </ul>
-              </form>
+              <Sorting/>
               <OffersList
                 className="cities__places-list tabs__content"
-                offers={offers}
+                offers={sortOffers(sortType, offers)}
               />
             </section>
             <div className="cities__right-section">
@@ -95,6 +87,7 @@ function MainScreen(props) {
 const mapStateToProps = (state) => ({
   city: state.city,
   offers: state.offers.filter((item) => item.city === state.city.name),
+  sortType: state.sortType,
 });
 
 MainScreen.propTypes = {
@@ -103,6 +96,7 @@ MainScreen.propTypes = {
     location: locationProp,
   }),
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
+  sortType: sortTypeProp,
 };
 
 export {MainScreen};
