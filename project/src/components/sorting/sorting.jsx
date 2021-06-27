@@ -13,8 +13,14 @@ function Sorting(props) {
   } = props;
   const [showOptions, setShowOptions] = useState(false);
 
-  const getOptionsOpenClass = () => showOptions ? 'places__options--opened' : '';
-  const getOptionActiveClass = (id) => id === currentSortType.id ? 'places__option--active' : '';
+  const getListClassName = () => {
+    const className = 'places__options places__options--custom';
+    return `${className} ${showOptions ? 'places__options--opened' : ''}`;
+  };
+  const getOptionClassName = (id) => {
+    const className = 'places__option';
+    return `${className} ${id === currentSortType.id ? 'places__option--active' : ''}`;
+  };
 
   const handleClickOption = (sortType) => {
     setSortType(sortType);
@@ -35,13 +41,13 @@ function Sorting(props) {
         </svg>
       </span>
       <ul
-        className={`places__options places__options--custom ${getOptionsOpenClass()}`}
+        className={getListClassName()}
       >
         {
           Object.values(SortType).map((item) => (
             <li
               key={item.id}
-              className={`places__option ${getOptionActiveClass(item.id)}`}
+              className={getOptionClassName(item.id)}
               tabIndex="0"
               onClick={() => handleClickOption(item)}
             >
