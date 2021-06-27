@@ -1,4 +1,5 @@
 import React, {useRef, useEffect} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -9,7 +10,12 @@ import {UrlMapPin} from '../../const';
 
 import useInteractiveMap from '../../hooks/use-interactiv-map/useInteractiveMap';
 
-function InteractiveMap({defaultLocation, points}) {
+function InteractiveMap(props) {
+  const {
+    defaultLocation,
+    points,
+    activePointId,
+  } = props;
   const mapRef = useRef(null);
   const map = useInteractiveMap(mapRef, defaultLocation);
 
@@ -21,6 +27,11 @@ function InteractiveMap({defaultLocation, points}) {
         iconSize: [30, 30],
         iconAnchor: [15, 30],
       });
+      const activePin = leaflet.icon({
+        iconUrl: UrlMapPin.ACTIVE,
+        iconSize: [30, 30],
+        iconAnchor: [15, 30],
+      });
       points.forEach((point) => {
         const marker = {
           coords: {
@@ -28,7 +39,7 @@ function InteractiveMap({defaultLocation, points}) {
             lng: point.location.longitude,
           },
           params: {
-            icon: defaultPin,
+            icon: activePointId === point.id ? activePin : defaultPin,
           },
         };
         leaflet.marker(marker.coords, marker.params).addTo(markers);
@@ -39,7 +50,7 @@ function InteractiveMap({defaultLocation, points}) {
     return () => {
       markers.clearLayers();
     };
-  }, [map, points]);
+  }, [map, points, activePointId]);
 
   return (
     <div
@@ -52,11 +63,17 @@ function InteractiveMap({defaultLocation, points}) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  activePointId: state.activeCardId,
+});
+
 InteractiveMap.propTypes = {
   defaultLocation: locationProp,
   points: PropTypes.arrayOf(PropTypes.shape({
     location: locationProp,
   })),
+  activePointId: PropTypes.number,
 };
 
-export default InteractiveMap;
+export {InteractiveMap};
+export default connect(mapStateToProps)(InteractiveMap);
