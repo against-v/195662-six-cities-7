@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+import locationProp from '../main-screen/location.prop';
+
 import {UrlMapPin} from '../../const';
 
 import useInteractiveMap from '../../hooks/use-interactiv-map/useInteractiveMap';
@@ -45,17 +47,9 @@ function InteractiveMap({defaultLocation, points}) {
 }
 
 InteractiveMap.propTypes = {
-  defaultLocation: PropTypes.shape({
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
-    zoom: PropTypes.number.isRequired,
-  }),
+  defaultLocation: locationProp,
   points: PropTypes.arrayOf(PropTypes.shape({
-    location: PropTypes.shape({
-      latitude: PropTypes.number.isRequired,
-      longitude: PropTypes.number.isRequired,
-      zoom: PropTypes.number.isRequired,
-    }),
+    location: locationProp,
   })),
 };
 

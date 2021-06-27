@@ -1,13 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 import OffersList from '../offers-list/offers-list';
 import cardOfferProp from '../offer-card/offer-card.prop';
 import InteractiveMap from '../interactive-map/interactive-map';
+import locationProp from './location.prop';
+import CitiesList from '../cities-list/cities-list';
 
-import city from '../../mocks/city';
+import {City} from '../../const';
 
-function MainScreen({offersCount, offers}) {
+function MainScreen(props) {
+  const {
+    city,
+    offers,
+  } = props;
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -41,46 +49,15 @@ function MainScreen({offersCount, offers}) {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="/">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
+          <CitiesList
+            list={Object.values(City)}
+          />
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in {city.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0"> Popular
@@ -104,7 +81,7 @@ function MainScreen({offersCount, offers}) {
               <section className="cities__map map">
                 <InteractiveMap
                   points={offers}
-                  defaultLocation={city}
+                  defaultLocation={city.location}
                 />
               </section>
             </div>
@@ -115,9 +92,18 @@ function MainScreen({offersCount, offers}) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  city: state.city,
+  offers: state.offers.filter((item) => item.city === state.city.name),
+});
+
 MainScreen.propTypes = {
-  offersCount: PropTypes.number.isRequired,
+  city: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    location: locationProp,
+  }),
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
 };
 
-export default MainScreen;
+export {MainScreen};
+export default connect(mapStateToProps)(MainScreen);
