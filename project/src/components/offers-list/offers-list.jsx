@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 import OfferCard from '../offer-card/offer-card';
-import PropTypes from 'prop-types';
 import cardOfferProp from '../offer-card/offer-card.prop';
+import {ActionCreator} from '../../store/action';
 
-function OffersList({offers, className}) {
-  const [activeCard, setActiveCard] = useState(null);
+function OffersList(props) {
+  const {
+    offers,
+    className,
+    setActiveCardId,
+  } = props;
   return (
     <div className={`places__list ${className}`}>
-      <span hidden>{activeCard}</span>
       {
         offers.map((item) => (
           <OfferCard
             key={item.id}
             offer={item}
-            mouseEventHandler={(cardValue) => setActiveCard(cardValue)}
+            mouseEventHandler={(cardValue) => setActiveCardId(cardValue)}
           />
         ))
       }
@@ -22,9 +27,17 @@ function OffersList({offers, className}) {
   );
 }
 
+const mapDispatchToProp = (dispatch) => ({
+  setActiveCardId(activeCard) {
+    dispatch(ActionCreator.setActiveCardId(activeCard));
+  },
+});
+
 OffersList.propTypes = {
   className: PropTypes.string,
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
+  setActiveCardId: PropTypes.func.isRequired,
 };
 
-export default OffersList;
+export {OffersList};
+export default connect(null, mapDispatchToProp)(OffersList);

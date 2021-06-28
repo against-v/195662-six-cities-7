@@ -60,3 +60,22 @@ export const City = {
     },
   },
 };
+
+export const SortType = {
+  POPULAR: {
+    id: 1,
+    title: 'Popular',
+  },
+  PRICE_LOW_TO_HIGH: {
+    id: 2,
+    title: 'Price: low to high',
+  },
+  PRICE_HIGH_TO_LOW: {
+    id: 3,
+    title: 'Price: high to low',
+  },
+  TOP_RATED_FIRST: {
+    id: 4,
+    title: 'Top rated first',
+  },
+};

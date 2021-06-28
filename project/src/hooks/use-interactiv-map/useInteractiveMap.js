@@ -28,7 +28,6 @@ function useInteractiveMap(mapRef, defaultLocation) {
       setMap(instance);
     }
 
-    //todo я не очень понимаю, почему у меня map !== null после 5 строки, поэтому дописал еще одно условие, чтобы обновлялась карта
     if (map) {
       map.setView({
         lat: defaultLocation.latitude,
