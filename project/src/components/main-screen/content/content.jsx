@@ -6,7 +6,6 @@ import Sorting from '../../sorting/sorting';
 import OffersList from '../../offers-list/offers-list';
 import InteractiveMap from '../../interactive-map/interactive-map';
 import cardOfferProp from '../../offer-card/offer-card.prop';
-import sortTypeProp from '../../sorting/sort-type.prop';
 import cityProp from '../../cities-list/city.prop';
 import {sortOffers} from '../../../utils';
 
@@ -14,7 +13,7 @@ function Content(props) {
   const {
     city,
     offers,
-    sortType,
+    sortedOffers,
   } = props;
 
   return (
@@ -26,7 +25,7 @@ function Content(props) {
           <Sorting/>
           <OffersList
             className="cities__places-list tabs__content"
-            offers={sortOffers(sortType, offers)}
+            offers={sortedOffers}
           />
         </section>
         <div className="cities__right-section">
@@ -42,14 +41,14 @@ function Content(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  sortType: state.sortType,
+const mapStateToProps = (state, ownProps) => ({
+  sortedOffers: sortOffers(state.sortType, ownProps.offers),
 });
 
 Content.propTypes = {
   city: cityProp,
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
-  sortType: sortTypeProp,
+  sortedOffers: PropTypes.arrayOf(cardOfferProp).isRequired,
 };
 
 export {Content};
