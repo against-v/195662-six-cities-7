@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import cardOfferProp from '../offer-card/offer-card.prop';
@@ -9,14 +10,24 @@ import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import OfferScreen from '../offer-screen/offer-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import Preloader from '../preloader/preloader';
 
-function App({offersCount, offers}) {
+function App(props) {
+  const {
+    offers
+  } = props;
+
+  if (offers.length === 0) {
+    return (
+      <Preloader/>
+    )
+  }
+
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
           <MainScreen
-            offersCount={offersCount}
             offers={offers}
           />
         </Route>
@@ -40,8 +51,12 @@ function App({offersCount, offers}) {
 }
 
 App.propTypes = {
-  offersCount: PropTypes.number.isRequired,
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+export {App};
+export default connect(mapStateToProps)(App);

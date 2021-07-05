@@ -50,7 +50,7 @@ function OfferCard(props) {
         <Link to={generatePath(AppRoute.OFFER, {id})}>
           <img
             className="place-card__image"
-            src={`img/${image}`}
+            src={image}
             width={imageWidth}
             height={imageHeight}
             alt="Place"

@@ -1,24 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
+import {createAPI} from './api';
+import {getOffersList} from './store/api-actions';
+import thunk from 'redux-thunk';
+
+const api = createAPI(
+  () => ({})
+);
+
 import App from './components/app/app';
 import reducer from './store/reducer';
-import offers from './mocks/offers';
 
-const offersCount = 123;
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk.withExtraArgument(api)),
+);
 
-const store = createStore(reducer);
+store.dispatch(getOffersList());
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider
       store={store}
     >
-      <App
-        offersCount={offersCount}
-        offers={offers}
-      />
+      <App/>
     </Provider>
 
   </React.StrictMode>,

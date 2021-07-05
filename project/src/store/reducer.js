@@ -1,10 +1,10 @@
 import {ActionType} from './action';
 import {City, SortType} from '../const';
-import offers from '../mocks/offers';
+import {adaptOffersToClient} from "../adapters";
 
 const initialState = {
   city: City.PARIS,
-  offers: offers,
+  offers: [],
   sortType: SortType.POPULAR,
   activeCardId: null,
 };
@@ -26,6 +26,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         activeCardId: action.payload,
       };
+    case ActionType.LOAD_OFFERS:
+      return {
+        ...state,
+        offers: adaptOffersToClient(action.payload),
+      }
     default:
       return state;
   }
