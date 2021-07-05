@@ -53,7 +53,7 @@ function App(props) {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
-  offersAreLoaded: PropTypes.bool,
+  offersAreLoaded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
