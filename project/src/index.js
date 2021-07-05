@@ -5,13 +5,12 @@ import {Provider} from 'react-redux';
 import {createAPI} from './api';
 import {getOffersList} from './store/api-actions';
 import thunk from 'redux-thunk';
+import reducer from './store/reducer';
+import App from './components/app/app';
 
 const api = createAPI(
-  () => ({})
+  () => ({}),
 );
-
-import App from './components/app/app';
-import reducer from './store/reducer';
 
 const store = createStore(
   reducer,

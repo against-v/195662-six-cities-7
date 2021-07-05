@@ -14,13 +14,13 @@ import Preloader from '../preloader/preloader';
 
 function App(props) {
   const {
-    offers
+    offers,
   } = props;
 
   if (offers.length === 0) {
     return (
       <Preloader/>
-    )
+    );
   }
 
   return (

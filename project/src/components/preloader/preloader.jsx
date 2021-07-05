@@ -4,21 +4,21 @@ function Preloader() {
   return (
     <div
       style={{
-        position: "fixed",
+        position: 'fixed',
         left: 0,
         top: 0,
-        width: "100%",
-        height: "100%",
-        backgroundColor: "#fff",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontSize: "24px",
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#fff',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: '24px',
       }}
     >
       Loading...
     </div>
-  )
+  );
 }
 
 export default Preloader;

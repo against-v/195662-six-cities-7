@@ -1,6 +1,6 @@
 import {ActionType} from './action';
 import {City, SortType} from '../const';
-import {adaptOffersToClient} from "../adapters";
+import {adaptOffersToClient} from '../adapters';
 
 const initialState = {
   city: City.PARIS,
@@ -30,7 +30,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers: adaptOffersToClient(action.payload),
-      }
+      };
     default:
       return state;
   }

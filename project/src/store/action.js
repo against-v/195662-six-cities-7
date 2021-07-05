@@ -21,6 +21,6 @@ export const ActionCreator = {
   loadOffers: (payload) => ({
     type: ActionType.LOAD_OFFERS,
     payload,
-  })
+  }),
 };
 

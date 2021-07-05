@@ -81,5 +81,5 @@ export const SortType = {
 };
 
 export const APIRoute = {
-  HOTELS: "/hotels",
+  HOTELS: '/hotels',
 };
