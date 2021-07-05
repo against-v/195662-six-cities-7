@@ -3,6 +3,8 @@ export const ActionType = {
   SET_SORT_TYPE: 'setSortType',
   SET_ACTIVE_CARD_ID: 'setActiveCard',
   LOAD_OFFERS: 'loadOffers',
+  REQUIRED_AUTHORIZATION: 'requiredAuthorization',
+  LOGOUT: 'logout',
 };
 
 export const ActionCreator = {
@@ -21,6 +23,13 @@ export const ActionCreator = {
   loadOffers: (payload) => ({
     type: ActionType.LOAD_OFFERS,
     payload,
+  }),
+  requiredAuthorization: (payload) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload,
+  }),
+  logout: () => ({
+    type: ActionType.LOGOUT,
   }),
 };
 

@@ -1,5 +1,5 @@
 import {ActionType} from './action';
-import {City, SortType} from '../const';
+import {City, SortType, AuthorizationStatus} from '../const';
 import {adaptOffersToClient} from '../adapters';
 
 const initialState = {
@@ -7,6 +7,7 @@ const initialState = {
   offers: [],
   sortType: SortType.POPULAR,
   activeCardId: null,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 
 const reducer = (state = initialState, action) => {
@@ -30,6 +31,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers: adaptOffersToClient(action.payload),
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     default:
       return state;
