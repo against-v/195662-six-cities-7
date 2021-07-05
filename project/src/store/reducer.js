@@ -5,6 +5,7 @@ import {adaptOffersToClient} from '../adapters';
 const initialState = {
   city: City.PARIS,
   offers: [],
+  offersAreLoaded: false,
   sortType: SortType.POPULAR,
   activeCardId: null,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
@@ -31,6 +32,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers: adaptOffersToClient(action.payload),
+        offersAreLoaded: true,
       };
     case ActionType.REQUIRE_AUTHORIZATION:
       return {

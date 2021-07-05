@@ -15,9 +15,10 @@ import Preloader from '../preloader/preloader';
 function App(props) {
   const {
     offers,
+    offersAreLoaded,
   } = props;
 
-  if (offers.length === 0) {
+  if (!offersAreLoaded) {
     return (
       <Preloader/>
     );
@@ -52,10 +53,12 @@ function App(props) {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
+  offersAreLoaded: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
   offers: state.offers,
+  offersAreLoaded: state.offersAreLoaded,
 });
 
 export {App};
