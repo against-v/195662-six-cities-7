@@ -82,6 +82,8 @@ export const SortType = {
 
 export const APIRoute = {
   HOTELS: '/hotels',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
 };
 
 export const AuthorizationStatus = {
