@@ -20,6 +20,7 @@ function UserNav(props) {
       </li>
       <li className="header__nav-item">
         <a
+          href="/"
           className="header__nav-link"
           onClick={(e) => {
             e.preventDefault();

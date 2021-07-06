@@ -2,10 +2,14 @@ import React, {useRef} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {login} from '../../store/api-actions';
+import {AppRoute, AuthorizationStatus} from '../../const';
+import {ActionCreator} from '../../store/action';
 
 function LoginScreen(props) {
   const {
+    isAuthorized,
     onSubmit,
+    redirectToRoot,
   } = props;
 
   const loginRef = useRef();
@@ -19,6 +23,10 @@ function LoginScreen(props) {
       password: passwordRef.current.value,
     });
   };
+
+  if (isAuthorized) {
+    redirectToRoot();
+  }
 
   return (
     <main className="page__main page__main--login">
@@ -67,15 +75,24 @@ function LoginScreen(props) {
   );
 }
 
+const mapStateToProps = (state) => ({
+  isAuthorized: state.authorizationStatus === AuthorizationStatus.AUTH,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(authData) {
     dispatch(login(authData));
   },
+  redirectToRoot() {
+    dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT));
+  },
 });
 
 LoginScreen.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  redirectToRoot: PropTypes.func.isRequired,
 };
 
 export {LoginScreen};
-export default connect(null, mapDispatchToProps)(LoginScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
