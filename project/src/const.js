@@ -3,6 +3,7 @@ export const AppRoute = {
   LOGIN: '/login',
   FAVORITES: '/favorites',
   OFFER: '/offer/:id',
+
 };
 
 export const UrlMapPin = {
