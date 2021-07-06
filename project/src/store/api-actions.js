@@ -8,7 +8,10 @@ export const getOffersList = () => (dispatch, _getState, api) => {
 
 export const checkAuth = () => (dispatch, _getState, api) => {
   api.get(APIRoute.LOGIN)
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(({data}) => {
+      dispatch(ActionCreator.setUser(data));
+      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+    })
     .catch(() => {});
 };
 
@@ -16,6 +19,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post(APIRoute.LOGIN, {email, password})
     .then(({data}) => {
       localStorage.setItem('token', data.token);
+      dispatch(ActionCreator.setUser(data));
       dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT));
     });

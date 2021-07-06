@@ -9,6 +9,7 @@ const initialState = {
   sortType: SortType.POPULAR,
   activeCardId: null,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  user: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -43,6 +44,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
+        // user: null,
+      };
+    case ActionType.SET_USER:
+      return {
+        ...state,
+        user: action.payload,
       };
     default:
       return state;
