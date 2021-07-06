@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {BrowserRouter} from 'react-router-dom';
+import {Router as BrowserRouter} from 'react-router-dom';
 import cardOfferProp from '../offer-card/offer-card.prop';
+import browserHistory from '../../browser-history';
 
 import Preloader from '../preloader/preloader';
 import Page from '../page/page';
@@ -19,7 +20,9 @@ function App(props) {
     );
   }
   return (
-    <BrowserRouter>
+    <BrowserRouter
+      history={browserHistory}
+    >
       <Page
         offers={offers}
       />

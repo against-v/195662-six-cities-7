@@ -5,6 +5,7 @@ export const ActionType = {
   LOAD_OFFERS: 'loadOffers',
   REQUIRE_AUTHORIZATION: 'requireAuthorization',
   LOGOUT: 'logout',
+  REDIRECT_TO_ROUTE: 'redirectToRoute',
 };
 
 export const ActionCreator = {
@@ -30,6 +31,10 @@ export const ActionCreator = {
   }),
   logout: () => ({
     type: ActionType.LOGOUT,
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
   }),
 };
 
