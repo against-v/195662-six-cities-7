@@ -44,7 +44,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
-        // user: null,
+        user: null,
       };
     case ActionType.SET_USER:
       return {

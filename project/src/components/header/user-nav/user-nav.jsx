@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../../const';
 import {logout} from '../../../store/api-actions';
 
 function UserNav(props) {
   const {
     email,
-    logout,
+    handleLogout,
   } = props;
 
   return (
@@ -21,16 +19,15 @@ function UserNav(props) {
         </a>
       </li>
       <li className="header__nav-item">
-        <Link
-          to={AppRoute.ROOT}
+        <a
           className="header__nav-link"
           onClick={(e) => {
             e.preventDefault();
-            logout();
+            handleLogout();
           }}
         >
           <span className="header__signout">Sign out</span>
-        </Link>
+        </a>
       </li>
     </ul>
   );
@@ -41,14 +38,14 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  logout() {
+  handleLogout() {
     dispatch(logout());
   },
 });
 
 UserNav.propTypes = {
   email: PropTypes.string.isRequired,
-  logout: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export {UserNav};
