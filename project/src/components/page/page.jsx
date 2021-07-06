@@ -7,6 +7,7 @@ import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import OfferScreen from '../offer-screen/offer-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import PrivateRoute from '../private-route/private-route';
 
 import cardOfferProp from '../offer-card/offer-card.prop';
 import {AppRoute} from '../../const';
@@ -70,11 +71,14 @@ function Page(props) {
         <Route exact path={AppRoute.LOGIN}>
           <LoginScreen/>
         </Route>
-        <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesScreen
-            offers={offers}
-          />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={() => (
+            <FavoritesScreen offers={offers}/>
+          )}
+        >
+        </PrivateRoute>
         <Route exact path={AppRoute.OFFER}>
           <OfferScreen/>
         </Route>
