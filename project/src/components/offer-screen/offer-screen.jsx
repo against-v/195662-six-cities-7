@@ -9,6 +9,7 @@ import {getOffer} from '../../store/api-actions';
 import OffersList from '../offers-list/offers-list';
 import Preloader from '../preloader/preloader';
 import offerProp from '../offer-card/offer-card.prop';
+import commentProp from '../comment/comment.prop';
 import {ActionCreator} from '../../store/action';
 import Rating from '../rating/rating';
 
@@ -201,6 +202,7 @@ OfferScreen.propTypes = {
   resetData: PropTypes.func,
   offer: offerProp,
   nearbyOffers: PropTypes.arrayOf(offerProp),
+  comments: PropTypes.arrayOf(commentProp),
 };
 
 export {OfferScreen};

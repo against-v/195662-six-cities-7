@@ -16,12 +16,7 @@ export const adaptOfferToClient = (offer) => {
       city: offer.city.name,
       cityLocation: offer.city.location,
       image: offer[Key.PREVIEW_IMAGE],
-      host: {
-        avatarUrl: offer.host.avatar_url,
-        id: offer.host.id,
-        isPro: offer.host.is_pro,
-        name: offer.host.name,
-      },
+      host: adaptUserToClient(offer.host),
     },
   );
 
@@ -30,4 +25,30 @@ export const adaptOfferToClient = (offer) => {
   });
 
   return adaptedOffer;
+};
+
+export const adaptCommentToClient = (comment) => Object.assign(
+  comment,
+  {
+    user: adaptUserToClient(comment.user),
+  },
+);
+
+export const adaptUserToClient = (user) => {
+  const Key = {
+    AVATAR_URL: 'avatar_url',
+    IS_PRO: 'is_pro',
+  };
+  const adaptedUser = Object.assign(
+    user,
+    {
+      avatarUrl: user[Key.AVATAR_URL],
+      isPro: user[Key.IS_PRO],
+    },
+  );
+  Object.values(Key).forEach((key) => {
+    delete adaptedUser[key];
+  });
+
+  return adaptedUser;
 };
