@@ -10,6 +10,9 @@ const initialState = {
   activeCardId: null,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   user: null,
+  offer: null,
+  nearbyOffers: [],
+  comments: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -34,6 +37,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         offers: adaptOffersToClient(action.payload),
         offersAreLoaded: true,
+      };
+    case ActionType.LOAD_OFFER:
+      return {
+        ...state,
+        offer: action.payload.offer,
+        nearbyOffers: action.payload.nearbyOffers,
+        comments: action.payload.comments,
       };
     case ActionType.REQUIRE_AUTHORIZATION:
       return {

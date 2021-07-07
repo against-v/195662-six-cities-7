@@ -1,13 +1,26 @@
-import React from 'react';
+import React, {useEffect } from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {useParams} from 'react-router-dom';
 import CommentsList from '../comments-list/comments-list';
 import InteractiveMap from '../interactive-map/interactive-map';
+import {getOffer} from '../../store/api-actions';
 
 import comments from '../../mocks/comments';
 import city from '../../mocks/city';
 import offers from '../../mocks/offers';
 import OffersList from '../offers-list/offers-list';
 
-function OfferScreen() {
+function OfferScreen(props) {
+  const {
+    getData,
+  } = props;
+  const {id} = useParams();
+  useEffect(() => {
+    getData(id);
+  });
+
+
   const nearestOffers = offers.slice(0, 3);
 
   return (
@@ -157,4 +170,15 @@ function OfferScreen() {
   );
 }
 
-export default OfferScreen;
+const mapDispatchToProps  = (dispatch) => ({
+  getData(id) {
+    dispatch(getOffer(id));
+  },
+});
+
+OfferScreen.propTypes = {
+  getData: PropTypes.func,
+};
+
+export {OfferScreen};
+export default connect(null, mapDispatchToProps)(OfferScreen);

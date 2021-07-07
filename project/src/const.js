@@ -83,6 +83,7 @@ export const SortType = {
 
 export const APIRoute = {
   HOTELS: '/hotels',
+  COMMENTS: '/comments',
   LOGIN: '/login',
   LOGOUT: '/logout',
 };

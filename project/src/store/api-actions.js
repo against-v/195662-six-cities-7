@@ -6,6 +6,21 @@ export const getOffersList = () => (dispatch, _getState, api) => {
     .then(({data}) => dispatch(ActionCreator.loadOffers(data)));
 };
 
+export const getOffer = (id) => (dispatch, _getState, api) => {
+  Promise.all([
+    api.get(`${APIRoute.HOTELS}/${id}`),
+    api.get(`${APIRoute.HOTELS}/${id}/nearby`),
+    api.get(`${APIRoute.COMMENTS}/${id}`),
+  ]).then((res) => {
+    const [offer, nearbyOffers, comments] =  res.map((item) => item.data);
+    dispatch(ActionCreator.loadOffer({
+      offer,
+      nearbyOffers,
+      comments,
+    }));
+  });
+};
+
 export const checkAuth = () => (dispatch, _getState, api) => {
   api.get(APIRoute.LOGIN)
     .then(({data}) => {
