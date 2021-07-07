@@ -14,6 +14,7 @@ export const adaptOffersToClient = (offers) => {
         bedroomCount: item[Key.BEDROOMS],
         adultMaxCount: item[Key.MAX_ADULTS],
         city: item.city.name,
+        image: item.preview_image,
       },
     );
     Object.values(Key).forEach((key) => {

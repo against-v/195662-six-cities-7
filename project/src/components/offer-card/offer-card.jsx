@@ -19,13 +19,12 @@ function OfferCard(props) {
     id,
     isPremium,
     isFavorite,
-    images,
+    image,
     title,
     price,
     rating,
     type,
   } = offer;
-  const image = images[0];
 
   const handleMouseEvent = (cardValue) => {
     if (mouseEventHandler) {
