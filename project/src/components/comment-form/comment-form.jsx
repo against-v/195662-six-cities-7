@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {createComment} from '../../store/api-actions';
 
-function CommentForm() {
-  const ratingValues = [1, 2, 3, 4, 5];
+function CommentForm(props) {
+  const {
+    onSubmit,
+  } = props;
+
+  const ratingValues = [5, 4, 3, 2, 1];
 
   const [data, setData] = useState({
-    rating: null,
-    review: '',
+    rating: 5,
+    comment: '',
   });
 
   const handleFieldChange = (e) => {
@@ -16,8 +23,17 @@ function CommentForm() {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(data);
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      action="#"
+      onSubmit={handleSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review"> Your review</label>
       <div className="reviews__rating-form form__rating">
         {ratingValues.map((val) => (
@@ -26,6 +42,7 @@ function CommentForm() {
               className="form__rating-input visually-hidden"
               name="rating"
               value={val}
+              defaultChecked={data.rating === val}
               id={`${val}-stars`}
               type="radio"
               onChange={handleFieldChange}
@@ -45,7 +62,7 @@ function CommentForm() {
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
-        name="review"
+        name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleFieldChange}
       />
@@ -60,4 +77,15 @@ function CommentForm() {
   );
 }
 
-export default CommentForm;
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit(data) {
+    dispatch(createComment(26, data));
+  },
+});
+
+CommentForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export {CommentForm};
+export default connect(null, mapDispatchToProps)(CommentForm);

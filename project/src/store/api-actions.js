@@ -48,3 +48,10 @@ export const logout = () => (dispatch, _getState, api) => {
       dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT));
     });
 };
+
+export const createComment = (id, payload) => (dispatch, _getState, api) => {
+  api.post(`${APIRoute.COMMENTS}/${id}`, payload)
+    .then(({data}) => {
+      dispatch(ActionCreator.loadComments(data));
+    });
+};

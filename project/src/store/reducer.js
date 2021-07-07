@@ -43,7 +43,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         offer: adaptOfferToClient(action.payload.offer),
         nearbyOffers: action.payload.nearbyOffers.map((item) => adaptOfferToClient(item)),
-        comments: action.payload.comments.map((item) => adaptCommentToClient(item)) ,
+        comments: action.payload.comments.map((item) => adaptCommentToClient(item)),
+      };
+    case ActionType.LOAD_COMMENTS:
+      return {
+        ...state,
+        comments: action.payload.map((item) => adaptCommentToClient(item)),
       };
     case ActionType.RESET_OFFER:
       return {

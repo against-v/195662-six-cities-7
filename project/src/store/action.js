@@ -9,6 +9,7 @@ export const ActionType = {
   LOGOUT: 'logout',
   REDIRECT_TO_ROUTE: 'redirectToRoute',
   SET_USER: 'setUser',
+  LOAD_COMMENTS: 'loadComments',
 };
 
 export const ActionCreator = {
@@ -30,6 +31,10 @@ export const ActionCreator = {
   }),
   loadOffer: (payload) => ({
     type: ActionType.LOAD_OFFER,
+    payload,
+  }),
+  loadComments: (payload) => ({
+    type: ActionType.LOAD_COMMENTS,
     payload,
   }),
   resetOffer: () => ({
