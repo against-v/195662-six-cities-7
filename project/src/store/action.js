@@ -4,6 +4,7 @@ export const ActionType = {
   SET_ACTIVE_CARD_ID: 'setActiveCard',
   LOAD_OFFERS: 'loadOffers',
   LOAD_OFFER: 'loadOffer',
+  RESET_OFFER: 'resetOffer',
   REQUIRE_AUTHORIZATION: 'requireAuthorization',
   LOGOUT: 'logout',
   REDIRECT_TO_ROUTE: 'redirectToRoute',
@@ -30,6 +31,9 @@ export const ActionCreator = {
   loadOffer: (payload) => ({
     type: ActionType.LOAD_OFFER,
     payload,
+  }),
+  resetOffer: () => ({
+    type: ActionType.RESET_OFFER,
   }),
   requireAuthorization: (payload) => ({
     type: ActionType.REQUIRE_AUTHORIZATION,

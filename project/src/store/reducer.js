@@ -1,6 +1,6 @@
 import {ActionType} from './action';
 import {City, SortType, AuthorizationStatus} from '../const';
-import {adaptOffersToClient} from '../adapters';
+import {adaptOfferToClient} from '../adapters';
 
 const initialState = {
   city: City.PARIS,
@@ -35,15 +35,22 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_OFFERS:
       return {
         ...state,
-        offers: adaptOffersToClient(action.payload),
+        offers: action.payload.map((item) => adaptOfferToClient(item)),
         offersAreLoaded: true,
       };
     case ActionType.LOAD_OFFER:
       return {
         ...state,
-        offer: action.payload.offer,
-        nearbyOffers: action.payload.nearbyOffers,
+        offer: adaptOfferToClient(action.payload.offer),
+        nearbyOffers: action.payload.nearbyOffers.map((item) => adaptOfferToClient(item)),
         comments: action.payload.comments,
+      };
+    case ActionType.RESET_OFFER:
+      return {
+        ...state,
+        offer: null,
+        nearbyOffers: [],
+        comments: [],
       };
     case ActionType.REQUIRE_AUTHORIZATION:
       return {

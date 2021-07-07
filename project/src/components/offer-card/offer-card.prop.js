@@ -10,4 +10,13 @@ export default PropTypes.shape({
   type: PropTypes.string.isRequired,
   bedroomCount: PropTypes.number.isRequired,
   adultMaxCount: PropTypes.number.isRequired,
-}).isRequired;
+
+  goods: PropTypes.arrayOf(PropTypes.string),
+  description: PropTypes.string,
+  host: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    avatarUrl: PropTypes.string,
+    isPro: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired,
+  }),
+});
