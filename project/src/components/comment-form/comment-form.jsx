@@ -90,8 +90,8 @@ function CommentForm(props) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  async onSubmit(id, data) {
-    await dispatch(createComment(id, data));
+  onSubmit(id, data) {
+    dispatch(createComment(id, data));
   },
 });
 
