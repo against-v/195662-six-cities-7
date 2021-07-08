@@ -2,16 +2,22 @@ import React, { useState } from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {createComment} from '../../store/api-actions';
+import {useParams} from 'react-router-dom';
+
+const MIN_LENGTH = 50;
+const MAX_LENGTH = 300;
 
 function CommentForm(props) {
   const {
     onSubmit,
   } = props;
 
+  const {id} = useParams();
+
   const ratingValues = [5, 4, 3, 2, 1];
 
   const [data, setData] = useState({
-    rating: 5,
+    rating: null,
     comment: '',
   });
 
@@ -23,9 +29,16 @@ function CommentForm(props) {
     });
   };
 
+  const setButtonDisabled = () => {
+    const commentLength = data.comment.length;
+    const validLength = commentLength > MIN_LENGTH && commentLength < MAX_LENGTH;
+    return !(validLength && data.rating);
+  };
+  const buttonDisabled = setButtonDisabled();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(data);
+    onSubmit(id, data);
   };
 
   return (
@@ -42,7 +55,6 @@ function CommentForm(props) {
               className="form__rating-input visually-hidden"
               name="rating"
               value={val}
-              defaultChecked={data.rating === val}
               id={`${val}-stars`}
               type="radio"
               onChange={handleFieldChange}
@@ -71,15 +83,15 @@ function CommentForm(props) {
           To submit review please make sure to set <span className="reviews__star">rating</span> and
           describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={buttonDisabled}>Submit</button>
       </div>
     </form>
   );
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit(data) {
-    dispatch(createComment(26, data));
+  async onSubmit(id, data) {
+    await dispatch(createComment(id, data));
   },
 });
 
