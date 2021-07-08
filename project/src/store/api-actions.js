@@ -1,5 +1,5 @@
 import {ActionCreator} from './action';
-import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
+import {APIRoute, AppRoute, AuthorizationStatus, HttpStatus} from '../const';
 
 export const getOffersList = () => (dispatch, _getState, api) => {
   api.get(APIRoute.HOTELS)
@@ -18,6 +18,11 @@ export const getOffer = (id) => (dispatch, _getState, api) => {
       nearbyOffers,
       comments,
     }));
+  }).catch(({response}) => {
+    const {status} = response;
+    if (status === HttpStatus.BAD_REQUEST || status === HttpStatus.NOT_FOUND) {
+      dispatch(ActionCreator.redirectToRoute(AppRoute.NOT_FOUND));
+    }
   });
 };
 
