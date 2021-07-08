@@ -3,6 +3,7 @@ export const AppRoute = {
   LOGIN: '/login',
   FAVORITES: '/favorites',
   OFFER: '/offer/:id',
+  NOT_FOUND: '/not-found',
 
 };
 
@@ -83,6 +84,7 @@ export const SortType = {
 
 export const APIRoute = {
   HOTELS: '/hotels',
+  COMMENTS: '/comments',
   LOGIN: '/login',
   LOGOUT: '/logout',
 };
@@ -91,4 +93,12 @@ export const AuthorizationStatus = {
   AUTH: 'AUTH',
   NO_AUTH: 'NO_AUTH',
   UNKNOWN: 'UNKNOWN',
+};
+
+export const HttpStatus = {
+  OK: 200,
+  CREATED: 201,
+  BAD_REQUEST: 400,
+  NOT_FOUND: 404,
+  SERVER_ERROR: 500,
 };

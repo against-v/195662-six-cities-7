@@ -1,9 +1,29 @@
 import {ActionCreator} from './action';
-import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
+import {APIRoute, AppRoute, AuthorizationStatus, HttpStatus} from '../const';
 
 export const getOffersList = () => (dispatch, _getState, api) => {
   api.get(APIRoute.HOTELS)
     .then(({data}) => dispatch(ActionCreator.loadOffers(data)));
+};
+
+export const getOffer = (id) => (dispatch, _getState, api) => {
+  Promise.all([
+    api.get(`${APIRoute.HOTELS}/${id}`),
+    api.get(`${APIRoute.HOTELS}/${id}/nearby`),
+    api.get(`${APIRoute.COMMENTS}/${id}`),
+  ]).then((res) => {
+    const [offer, nearbyOffers, comments] =  res.map((item) => item.data);
+    dispatch(ActionCreator.loadOffer({
+      offer,
+      nearbyOffers,
+      comments,
+    }));
+  }).catch(({response}) => {
+    const {status} = response;
+    if (status === HttpStatus.BAD_REQUEST || status === HttpStatus.NOT_FOUND) {
+      dispatch(ActionCreator.redirectToRoute(AppRoute.NOT_FOUND));
+    }
+  });
 };
 
 export const checkAuth = () => (dispatch, _getState, api) => {
@@ -31,5 +51,12 @@ export const logout = () => (dispatch, _getState, api) => {
       localStorage.removeItem('token');
       dispatch(ActionCreator.logout());
       dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT));
+    });
+};
+
+export const createComment = (id, payload) => (dispatch, _getState, api) => {
+  api.post(`${APIRoute.COMMENTS}/${id}`, payload)
+    .then(({data}) => {
+      dispatch(ActionCreator.loadComments(data));
     });
 };

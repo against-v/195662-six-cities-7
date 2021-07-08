@@ -7,14 +7,16 @@ import browserHistory from '../../browser-history';
 
 import Preloader from '../preloader/preloader';
 import Page from '../page/page';
+import {AuthorizationStatus} from '../../const';
 
 function App(props) {
   const {
     offers,
     offersAreLoaded,
+    authorizationStatus,
   } = props;
 
-  if (!offersAreLoaded) {
+  if (authorizationStatus === AuthorizationStatus.UNKNOWN && !offersAreLoaded) {
     return (
       <Preloader/>
     );
@@ -33,11 +35,13 @@ function App(props) {
 App.propTypes = {
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
   offersAreLoaded: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   offers: state.offers,
   offersAreLoaded: state.offersAreLoaded,
+  authorizationStatus: state.authorizationStatus,
 });
 
 export {App};

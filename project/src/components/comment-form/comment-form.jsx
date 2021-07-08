@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {createComment} from '../../store/api-actions';
+import {useParams} from 'react-router-dom';
 
-function CommentForm() {
-  const ratingValues = [1, 2, 3, 4, 5];
+const MIN_LENGTH = 50;
+const MAX_LENGTH = 300;
+
+function CommentForm(props) {
+  const {
+    onSubmit,
+  } = props;
+
+  const {id} = useParams();
+
+  const ratingValues = [5, 4, 3, 2, 1];
 
   const [data, setData] = useState({
     rating: null,
-    review: '',
+    comment: '',
   });
 
   const handleFieldChange = (e) => {
@@ -16,8 +29,24 @@ function CommentForm() {
     });
   };
 
+  const setButtonDisabled = () => {
+    const commentLength = data.comment.length;
+    const validLength = commentLength > MIN_LENGTH && commentLength < MAX_LENGTH;
+    return !(validLength && data.rating);
+  };
+  const buttonDisabled = setButtonDisabled();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(id, data);
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      action="#"
+      onSubmit={handleSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review"> Your review</label>
       <div className="reviews__rating-form form__rating">
         {ratingValues.map((val) => (
@@ -45,7 +74,7 @@ function CommentForm() {
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
-        name="review"
+        name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleFieldChange}
       />
@@ -54,10 +83,21 @@ function CommentForm() {
           To submit review please make sure to set <span className="reviews__star">rating</span> and
           describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={buttonDisabled}>Submit</button>
       </div>
     </form>
   );
 }
 
-export default CommentForm;
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit(id, data) {
+    dispatch(createComment(id, data));
+  },
+});
+
+CommentForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export {CommentForm};
+export default connect(null, mapDispatchToProps)(CommentForm);
