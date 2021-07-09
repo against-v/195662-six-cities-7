@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {createComment} from '../../store/api-actions';
 import {useParams} from 'react-router-dom';
-import {ActionCreator} from "../../store/action";
+import {ActionCreator} from '../../store/action';
 
 const MIN_LENGTH = 50;
 const MAX_LENGTH = 300;
