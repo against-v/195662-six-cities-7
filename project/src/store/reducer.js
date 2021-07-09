@@ -13,6 +13,9 @@ const initialState = {
   offer: null,
   nearbyOffers: [],
   comments: [],
+  commentFormIsLoading: false,
+  commentFormError: null,
+
 };
 
 const reducer = (state = initialState, action) => {
@@ -72,6 +75,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    case ActionType.SET_COMMENT_FORM_IS_LOADING:
+      return {
+        ...state,
+        commentFormIsLoading: action.payload,
       };
     default:
       return state;

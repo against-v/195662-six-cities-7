@@ -58,5 +58,6 @@ export const createComment = (id, payload) => (dispatch, _getState, api) => {
   api.post(`${APIRoute.COMMENTS}/${id}`, payload)
     .then(({data}) => {
       dispatch(ActionCreator.loadComments(data));
+      dispatch(ActionCreator.setCommentFormIsLoading(false));
     });
 };

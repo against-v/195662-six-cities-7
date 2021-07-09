@@ -10,6 +10,7 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: 'redirectToRoute',
   SET_USER: 'setUser',
   LOAD_COMMENTS: 'loadComments',
+  SET_COMMENT_FORM_IS_LOADING: 'setCommentFormIsLoading',
 };
 
 export const ActionCreator = {
@@ -51,9 +52,13 @@ export const ActionCreator = {
   logout: () => ({
     type: ActionType.LOGOUT,
   }),
-  redirectToRoute: (url) => ({
+  redirectToRoute: (payload) => ({
     type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
+    payload,
+  }),
+  setCommentFormIsLoading: (payload) => ({
+    type: ActionType.SET_COMMENT_FORM_IS_LOADING,
+    payload,
   }),
 };
 
