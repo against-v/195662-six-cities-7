@@ -5,8 +5,10 @@ import {createComment} from '../../store/api-actions';
 import {useParams} from 'react-router-dom';
 import {ActionCreator} from '../../store/action';
 
-const MIN_LENGTH = 1;
+const MIN_LENGTH = 50;
 const MAX_LENGTH = 300;
+
+const ratingValues = [5, 4, 3, 2, 1];
 
 function CommentForm(props) {
   const {
@@ -17,8 +19,6 @@ function CommentForm(props) {
 
   const {id} = useParams();
 
-  const ratingValues = [5, 4, 3, 2, 1];
-
   const initialState = {
     rating: null,
     comment: '',
@@ -26,18 +26,17 @@ function CommentForm(props) {
 
   const [data, setData] = useState({...initialState});
 
-  const handleFieldChange = (e) => {
-    // e.preventDefault();
-    const {name, value} = e.target;
+  const handleFieldChange = (name, value) => {
     setData({
       ...data,
       [name]: value,
     });
+
   };
 
   const setButtonDisabled = () => {
     const commentLength = data.comment.length;
-    const validLength = commentLength > MIN_LENGTH && commentLength < MAX_LENGTH;
+    const validLength = commentLength >= MIN_LENGTH && commentLength < MAX_LENGTH;
     return !(validLength && data.rating);
   };
   const buttonDisabled = setButtonDisabled();
@@ -49,8 +48,6 @@ function CommentForm(props) {
   };
 
   useEffect(() => {
-    // console.log(11);
-    // console.log({...initialState});
 
     if (!formIsLoading) {
       setData({...initialState});
@@ -63,7 +60,7 @@ function CommentForm(props) {
       action="#"
       onSubmit={handleSubmit}
     >
-      <label className="reviews__label form__label" htmlFor="review"> Your review {data.rating || 'null'}</label>
+      <label className="reviews__label form__label" htmlFor="review"> Your review</label>
       <div className="reviews__rating-form form__rating">
         {ratingValues.map((val) => (
           <React.Fragment key={val}>
@@ -74,7 +71,9 @@ function CommentForm(props) {
               checked={data.rating === val}
               id={`${val}-stars`}
               type="radio"
-              onChange={handleFieldChange}
+              onChange={(e) => {
+                handleFieldChange(e.target.name, val);
+              }}
               disabled={formIsLoading}
             />
             <label
@@ -94,9 +93,11 @@ function CommentForm(props) {
         id="review"
         name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleFieldChange}
         disabled={formIsLoading}
         value={data.comment}
+        onChange={(e) => {
+          handleFieldChange(e.target.name, e.target.value);
+        }}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
