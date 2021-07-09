@@ -10,6 +10,7 @@ import App from './components/app/app';
 import {ActionCreator} from './store/action';
 import {redirect} from './store/middlewares/redirect';
 import {AuthorizationStatus} from './const';
+
 const api = createAPI(
   () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)),
 );

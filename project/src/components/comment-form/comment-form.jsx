@@ -10,49 +10,55 @@ const MAX_LENGTH = 300;
 
 const ratingValues = [5, 4, 3, 2, 1];
 
+const initialState = {
+  rating: null,
+  comment: '',
+};
+
+const setButtonDisabled = (commentLength, rating) => {
+  const validLength = commentLength >= MIN_LENGTH && commentLength < MAX_LENGTH;
+  return !(validLength && rating);
+};
+
 function CommentForm(props) {
   const {
     onSubmit,
     formIsLoading,
     setFormDisabled,
+    error,
+    resetError,
   } = props;
 
   const {id} = useParams();
 
-  const initialState = {
-    rating: null,
-    comment: '',
-  };
-
   const [data, setData] = useState({...initialState});
 
   const handleFieldChange = (name, value) => {
+    // if (error) {
+    //   resetError();
+    // }
     setData({
       ...data,
       [name]: value,
     });
-
   };
 
-  const setButtonDisabled = () => {
-    const commentLength = data.comment.length;
-    const validLength = commentLength >= MIN_LENGTH && commentLength < MAX_LENGTH;
-    return !(validLength && data.rating);
-  };
-  const buttonDisabled = setButtonDisabled();
+  const buttonDisabled = setButtonDisabled(data.comment.length, data.rating);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (error) {
+      resetError();
+    }
     setFormDisabled();
     onSubmit(id, data);
   };
 
   useEffect(() => {
-
-    if (!formIsLoading) {
+    if (!formIsLoading && !error) {
       setData({...initialState});
     }
-  }, [formIsLoading]);
+  }, [formIsLoading, error]);
 
   return (
     <form
@@ -106,6 +112,16 @@ function CommentForm(props) {
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={buttonDisabled || formIsLoading}>Submit</button>
       </div>
+      {error &&
+      <p
+        style={{
+          color: 'red',
+          marginBottom: 0,
+        }}
+      >
+        {error}
+      </p>}
+
     </form>
   );
 }
@@ -117,16 +133,22 @@ const mapDispatchToProps = (dispatch) => ({
   setFormDisabled() {
     dispatch(ActionCreator.setCommentFormIsLoading(true));
   },
+  resetError() {
+    dispatch(ActionCreator.setCommentFormError(null));
+  },
 });
 
 const mapStateToProps = (state) => ({
   formIsLoading: state.commentFormIsLoading,
+  error: state.commentFormError,
 });
 
 CommentForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   setFormDisabled: PropTypes.func.isRequired,
   formIsLoading: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+  resetError: PropTypes.func,
 };
 
 export {CommentForm};

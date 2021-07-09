@@ -59,5 +59,9 @@ export const createComment = (id, payload) => (dispatch, _getState, api) => {
     .then(({data}) => {
       dispatch(ActionCreator.loadComments(data));
       dispatch(ActionCreator.setCommentFormIsLoading(false));
+    })
+    .catch((error) => {
+      dispatch(ActionCreator.setCommentFormError(error.response.data.error));
+      dispatch(ActionCreator.setCommentFormIsLoading(false));
     });
 };

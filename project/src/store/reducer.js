@@ -15,7 +15,6 @@ const initialState = {
   comments: [],
   commentFormIsLoading: false,
   commentFormError: null,
-
 };
 
 const reducer = (state = initialState, action) => {
@@ -80,6 +79,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         commentFormIsLoading: action.payload,
+      };
+    case ActionType.SET_COMMENT_FORM_ERROR:
+      return {
+        ...state,
+        commentFormError: action.payload,
       };
     default:
       return state;

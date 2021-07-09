@@ -11,6 +11,7 @@ export const ActionType = {
   SET_USER: 'setUser',
   LOAD_COMMENTS: 'loadComments',
   SET_COMMENT_FORM_IS_LOADING: 'setCommentFormIsLoading',
+  SET_COMMENT_FORM_ERROR: 'setCommentFormError',
 };
 
 export const ActionCreator = {
@@ -58,6 +59,10 @@ export const ActionCreator = {
   }),
   setCommentFormIsLoading: (payload) => ({
     type: ActionType.SET_COMMENT_FORM_IS_LOADING,
+    payload,
+  }),
+  setCommentFormError: (payload) => ({
+    type: ActionType.SET_COMMENT_FORM_ERROR,
     payload,
   }),
 };
