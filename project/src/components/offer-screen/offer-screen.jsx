@@ -12,6 +12,14 @@ import offerProp from '../offer-card/offer-card.prop';
 import commentProp from '../comment/comment.prop';
 import {ActionCreator} from '../../store/action';
 import Rating from '../rating/rating';
+import {sortComments} from '../../utils';
+
+const getAvatarWrapperClassName = (status) => {
+  const defaultClassName = 'property__avatar-wrapper  user__avatar-wrapper';
+  return status ? `${defaultClassName} property__avatar-wrapper--pro` : defaultClassName;
+};
+
+const getActualComments = (comments) => sortComments(comments).slice(0, 10);
 
 function OfferScreen(props) {
   const {
@@ -51,11 +59,6 @@ function OfferScreen(props) {
     host,
     cityLocation,
   } = offer;
-
-  const getAvatarWrapperClassName = (status) => {
-    const defaultClassName = 'property__avatar-wrapper  user__avatar-wrapper';
-    return status ? `${defaultClassName} property__avatar-wrapper--pro` : defaultClassName;
-  };
 
   const avatarWrapperClassName = getAvatarWrapperClassName(host.isPro);
 
@@ -158,7 +161,8 @@ function OfferScreen(props) {
               </div>
             </div>
             <CommentsList
-              comments={comments}
+              commentsCount={comments.length}
+              comments={getActualComments(comments)}
             />
           </div>
         </div>
