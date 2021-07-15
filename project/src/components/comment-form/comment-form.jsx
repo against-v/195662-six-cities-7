@@ -1,64 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {createComment} from '../../store/api-actions';
-import {useParams} from 'react-router-dom';
 import {ActionCreator} from '../../store/action';
-
-const MIN_LENGTH = 50;
-const MAX_LENGTH = 300;
-
-const ratingValues = [5, 4, 3, 2, 1];
-
-const initialState = {
-  rating: null,
-  comment: '',
-};
-
-const setButtonDisabled = (commentLength, rating) => {
-  const validLength = commentLength >= MIN_LENGTH && commentLength < MAX_LENGTH;
-  return !(validLength && rating);
-};
+import {useCommentForm} from '../../hooks/use-comment-form/useCommentForm';
 
 function CommentForm(props) {
   const {
-    onSubmit,
     formIsLoading,
-    setFormDisabled,
     error,
-    resetError,
   } = props;
 
-  const {id} = useParams();
-
-  const [data, setData] = useState({...initialState});
-
-  const handleFieldChange = (name, value) => {
-    // if (error) {
-    //   resetError();
-    // }
-    setData({
-      ...data,
-      [name]: value,
-    });
-  };
-
-  const buttonDisabled = setButtonDisabled(data.comment.length, data.rating);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (error) {
-      resetError();
-    }
-    setFormDisabled();
-    onSubmit(id, data);
-  };
-
-  useEffect(() => {
-    if (!formIsLoading && !error) {
-      setData({...initialState});
-    }
-  }, [formIsLoading, error]);
+  const [
+    ratingValues,
+    data,
+    buttonDisabled,
+    handleFieldChange,
+    handleSubmit,
+  ] = useCommentForm(props);
 
   return (
     <form
@@ -144,11 +103,8 @@ const mapStateToProps = (state) => ({
 });
 
 CommentForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  setFormDisabled: PropTypes.func.isRequired,
   formIsLoading: PropTypes.bool.isRequired,
   error: PropTypes.string,
-  resetError: PropTypes.func,
 };
 
 export {CommentForm};
