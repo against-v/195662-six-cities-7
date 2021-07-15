@@ -5,28 +5,20 @@ import {connect} from 'react-redux';
 import {SortType} from '../../const';
 import {ActionCreator} from '../../store/action';
 import sortTypeProp from './sort-type.prop';
+import {useSorting} from '../../hooks/use-sorting/useSorting';
+
+const getOptionClassName = (sortTypeId, currentSortTypeId) => {
+  const className = 'places__option';
+  return `${className} ${sortTypeId === currentSortTypeId ? 'places__option--active' : ''}`;
+};
 
 function Sorting(props) {
   const {
     currentSortType,
     setSortType,
   } = props;
-  const [showOptions, setShowOptions] = useState(false);
 
-  const getListClassName = () => {
-    const className = 'places__options places__options--custom';
-    return `${className} ${showOptions ? 'places__options--opened' : ''}`;
-  };
-  const getOptionClassName = (id) => {
-    const className = 'places__option';
-    return `${className} ${id === currentSortType.id ? 'places__option--active' : ''}`;
-  };
-
-  const handleClickOption = (sortType) => {
-    setSortType(sortType);
-    setShowOptions(false);
-  };
-
+  const [showOptions, setShowOptions, handleClickOption, listClassName] = useSorting(setSortType);
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -41,13 +33,13 @@ function Sorting(props) {
         </svg>
       </span>
       <ul
-        className={getListClassName()}
+        className={listClassName}
       >
         {
           Object.values(SortType).map((item) => (
             <li
               key={item.id}
-              className={getOptionClassName(item.id)}
+              className={getOptionClassName(item.id, currentSortType.id)}
               tabIndex="0"
               onClick={() => handleClickOption(item)}
             >
