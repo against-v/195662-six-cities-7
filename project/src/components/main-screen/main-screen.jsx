@@ -9,6 +9,11 @@ import cardOfferProp from '../offer-card/offer-card.prop';
 import {City} from '../../const';
 import EmptyContent from './empty-content/empty-content';
 
+const getMainClassName = (contentIsEmpty) => {
+  const className = 'page__main page__main--index';
+  return `${className} ${contentIsEmpty ? 'page__main--index-empty' : ''}`;
+};
+
 function MainScreen(props) {
   const {
     city,
@@ -17,14 +22,9 @@ function MainScreen(props) {
 
   const contentIsEmpty = offers.length === 0;
 
-  const getMainClassName = () => {
-    const className = 'page__main page__main--index';
-    return `${className} ${contentIsEmpty ? 'page__main--index-empty' : ''}`;
-  };
-
   return (
     <main
-      className={getMainClassName()}
+      className={getMainClassName(contentIsEmpty)}
     >
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
