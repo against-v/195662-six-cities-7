@@ -1,7 +1,6 @@
-import React, {useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {useParams} from 'react-router-dom';
 import CommentsList from '../comments-list/comments-list';
 import InteractiveMap from '../interactive-map/interactive-map';
 import {getOffer} from '../../store/api-actions';
@@ -13,6 +12,7 @@ import commentProp from '../comment/comment.prop';
 import {ActionCreator} from '../../store/action';
 import Rating from '../rating/rating';
 import {sortComments} from '../../utils';
+import {useOfferScreen} from '../../hooks/use-offer-screen/useOfferScreen';
 
 const getAvatarWrapperClassName = (status) => {
   const defaultClassName = 'property__avatar-wrapper  user__avatar-wrapper';
@@ -30,14 +30,7 @@ function OfferScreen(props) {
     nearbyOffers,
   } = props;
 
-  const {id} = useParams();
-
-  useEffect(() => {
-    getData(id);
-    return () => {
-      resetData();
-    };
-  }, [getData, id, resetData]);
+  useOfferScreen(getData, resetData, offer);
 
   if (!offer) {
     return (
