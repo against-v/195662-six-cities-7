@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 
 import cityProp from './city.prop';
 import {ActionCreator} from '../../store/action';
+import {useCitiesList} from '../../hooks/use-cities-list/useCitiesList';
 
 function CitiesList(props) {
   const {
@@ -12,14 +13,7 @@ function CitiesList(props) {
     setCity,
   } = props;
 
-  const getTabClassName = (city) => {
-    const className = 'locations__item-link tabs__item';
-    return `${className} ${city.name === currentCity.name ? 'tabs__item--active' : ''}`;
-  };
-  const handleClick = (e, city) => {
-    e.preventDefault();
-    setCity(city);
-  };
+  const [getTabClassName, handleClick] = useCitiesList(currentCity, setCity);
 
   return (
     <section className="locations container">
