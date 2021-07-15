@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {login} from '../../store/api-actions';
 import {AppRoute, AuthorizationStatus} from '../../const';
+import {useLogin} from '../../hooks/use-login/useLogin';
 
 function LoginScreen(props) {
   const {
@@ -11,17 +12,7 @@ function LoginScreen(props) {
     onSubmit,
   } = props;
 
-  const loginRef = useRef();
-  const passwordRef = useRef();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    onSubmit({
-      login: loginRef.current.value,
-      password: passwordRef.current.value,
-    });
-  };
+  const [loginRef, passwordRef, handleSubmit] = useLogin(onSubmit);
 
   if (isAuthorized) {
     return (
