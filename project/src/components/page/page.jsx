@@ -13,24 +13,24 @@ import cardOfferProp from '../offer-card/offer-card.prop';
 import {AppRoute} from '../../const';
 import Header from '../header/header';
 
+const setPageClassName = (path) => {
+  const className = 'page';
+  switch (path) {
+    case AppRoute.ROOT:
+      return `${className} page--gray page--main`;
+    case AppRoute.LOGIN:
+      return `${className} page--gray page--login`;
+    default:
+      return className;
+  }
+};
+
 function Page(props) {
   const {
     offers,
   } = props;
 
   const location = useLocation();
-
-  const setPageClassName = (path) => {
-    const className = 'page';
-    switch (path) {
-      case AppRoute.ROOT:
-        return `${className} page--gray page--main`;
-      case AppRoute.LOGIN:
-        return `${className} page--gray page--login`;
-      default:
-        return className;
-    }
-  };
 
   const pageClassName = setPageClassName(location.pathname);
 
