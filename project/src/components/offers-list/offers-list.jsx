@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 
 import OfferCard from '../offer-card/offer-card';
 import cardOfferProp from '../offer-card/offer-card.prop';
-import {ActionCreator} from '../../store/action';
+import {setActiveCardId} from '../../store/action';
 
 function OffersList(props) {
   const {
     offers,
     className,
-    setActiveCardId,
+    handleSetActiveCardId,
   } = props;
   return (
     <div className={`places__list ${className}`}>
@@ -19,7 +19,7 @@ function OffersList(props) {
           <OfferCard
             key={item.id}
             offer={item}
-            mouseEventHandler={(cardValue) => setActiveCardId(cardValue)}
+            mouseEventHandler={(cardValue) => handleSetActiveCardId(cardValue)}
           />
         ))
       }
@@ -28,15 +28,15 @@ function OffersList(props) {
 }
 
 const mapDispatchToProp = (dispatch) => ({
-  setActiveCardId(activeCard) {
-    dispatch(ActionCreator.setActiveCardId(activeCard));
+  handleSetActiveCardId(activeCard) {
+    dispatch(setActiveCardId(activeCard));
   },
 });
 
 OffersList.propTypes = {
   className: PropTypes.string,
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
-  setActiveCardId: PropTypes.func.isRequired,
+  handleSetActiveCardId: PropTypes.func.isRequired,
 };
 
 export {OffersList};

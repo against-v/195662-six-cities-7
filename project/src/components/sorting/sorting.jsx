@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {SortType} from '../../const';
-import {ActionCreator} from '../../store/action';
+import {setSortType} from '../../store/action';
 import sortTypeProp from './sort-type.prop';
 import {useSorting} from '../../hooks/use-sorting/useSorting';
 
@@ -15,10 +15,10 @@ const getOptionClassName = (sortTypeId, currentSortTypeId) => {
 function Sorting(props) {
   const {
     currentSortType,
-    setSortType,
+    handleSetSortType,
   } = props;
 
-  const [showOptions, setShowOptions, handleClickOption, listClassName] = useSorting(setSortType);
+  const [showOptions, setShowOptions, handleClickOption, listClassName] = useSorting(handleSetSortType);
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -57,14 +57,14 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setSortType(sortType) {
-    dispatch(ActionCreator.setSortType((sortType)));
+  handleSetSortType(sortType) {
+    dispatch(setSortType((sortType)));
   },
 });
 
 Sorting.propTypes = {
   currentSortType: sortTypeProp,
-  setSortType: PropTypes.func.isRequired,
+  handleSetSortType: PropTypes.func.isRequired,
 };
 
 export {Sorting};

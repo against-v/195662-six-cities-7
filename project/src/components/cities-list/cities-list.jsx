@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import cityProp from './city.prop';
-import {ActionCreator} from '../../store/action';
+import {setCity} from '../../store/action';
 import {useCitiesList} from '../../hooks/use-cities-list/useCitiesList';
 
 function CitiesList(props) {
   const {
     list,
     currentCity,
-    setCity,
+    handleSetCity,
   } = props;
 
-  const [getTabClassName, handleClick] = useCitiesList(currentCity, setCity);
+  const [getTabClassName, handleClick] = useCitiesList(currentCity, handleSetCity);
 
   return (
     <section className="locations container">
@@ -44,15 +44,15 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setCity(city) {
-    dispatch(ActionCreator.setCity(city));
+  handleSetCity(city) {
+    dispatch(setCity(city));
   },
 });
 
 CitiesList.propTypes = {
   list: PropTypes.arrayOf(cityProp),
   currentCity: cityProp,
-  setCity: PropTypes.func.isRequired,
+  handleSetCity: PropTypes.func.isRequired,
 };
 
 export {CitiesList};

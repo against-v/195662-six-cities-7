@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {createComment} from '../../store/api-actions';
-import {ActionCreator} from '../../store/action';
+import {setCommentFormIsLoading, setCommentFormError} from '../../store/action';
 import {useCommentForm} from '../../hooks/use-comment-form/useCommentForm';
 
 function CommentForm(props) {
@@ -90,10 +90,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(createComment(id, data));
   },
   setFormDisabled() {
-    dispatch(ActionCreator.setCommentFormIsLoading(true));
+    dispatch(setCommentFormIsLoading(true));
   },
   resetError() {
-    dispatch(ActionCreator.setCommentFormError(null));
+    dispatch(setCommentFormError(null));
   },
 });
 

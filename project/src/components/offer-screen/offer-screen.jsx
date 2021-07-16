@@ -9,7 +9,7 @@ import OffersList from '../offers-list/offers-list';
 import Preloader from '../preloader/preloader';
 import offerProp from '../offer-card/offer-card.prop';
 import commentProp from '../comment/comment.prop';
-import {ActionCreator} from '../../store/action';
+import {resetOffer} from '../../store/action';
 import Rating from '../rating/rating';
 import {sortComments} from '../../utils';
 import {useOfferScreen} from '../../hooks/use-offer-screen/useOfferScreen';
@@ -184,7 +184,7 @@ const mapDispatchToProps  = (dispatch) => ({
     dispatch(getOffer(id));
   },
   resetData() {
-    dispatch(ActionCreator.resetOffer());
+    dispatch(resetOffer());
   },
 });
 

@@ -7,12 +7,12 @@ import {checkAuth, getOffersList} from './store/api-actions';
 import thunk from 'redux-thunk';
 import reducer from './store/reducer';
 import App from './components/app/app';
-import {ActionCreator} from './store/action';
+import {requireAuthorization} from './store/action';
 import {redirect} from './store/middlewares/redirect';
 import {AuthorizationStatus} from './const';
 
 const api = createAPI(
-  () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)),
+  () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
 );
 
 const store = createStore(
