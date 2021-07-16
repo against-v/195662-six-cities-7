@@ -1,4 +1,6 @@
-import {ActionType} from '../action';
+import {createReducer} from '@reduxjs/toolkit';
+
+import {setActiveCardId, setCity, setSortType} from '../action';
 import {City, SortType} from '../../const';
 
 const initialState = {
@@ -7,26 +9,17 @@ const initialState = {
   activeCardId: null,
 };
 
-const other = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.SET_CITY:
-      return {
-        ...state,
-        city: action.payload,
-      };
-    case ActionType.SET_SORT_TYPE:
-      return {
-        ...state,
-        sortType: action.payload,
-      };
-    case ActionType.SET_ACTIVE_CARD_ID:
-      return {
-        ...state,
-        activeCardId: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+const other = createReducer(initialState, (builder) => {
+  builder
+    .addCase(setCity, (state, action) => {
+      state.city = action.payload;
+    })
+    .addCase(setSortType, (state, action) => {
+      state.sortType = action.payload;
+    })
+    .addCase(setActiveCardId, (state, action) => {
+      state.activeCardId = action.payload;
+    });
+});
 
 export {other};

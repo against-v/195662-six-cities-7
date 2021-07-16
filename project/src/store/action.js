@@ -1,3 +1,5 @@
+import {createAction} from '@reduxjs/toolkit';
+
 export const ActionType = {
   SET_CITY: 'setCity',
   SET_SORT_TYPE: 'setSortType',
@@ -14,53 +16,42 @@ export const ActionType = {
   SET_COMMENT_FORM_ERROR: 'setCommentFormError',
 };
 
-export const setCity = (payload) => ({
-  type: ActionType.SET_CITY,
+export const setCity = createAction(ActionType.SET_CITY, (payload) => ({
   payload,
-});
-export const setSortType = (payload) => ({
-  type: ActionType.SET_SORT_TYPE,
+}));
+export const setSortType = createAction(ActionType.SET_SORT_TYPE, (payload) => ({
   payload,
-});
-export const setActiveCardId = (payload) => ({
-  type: ActionType.SET_ACTIVE_CARD_ID,
+}));
+export const setActiveCardId = createAction(ActionType.SET_ACTIVE_CARD_ID, (payload) => ({
   payload,
-});
-export const loadOffers = (payload) => ({
-  type: ActionType.LOAD_OFFERS,
+}));
+export const loadOffers = createAction(ActionType.LOAD_OFFERS, (payload) => ({
   payload,
-});
-export const loadOffer = (payload) => ({
-  type: ActionType.LOAD_OFFER,
+}));
+export const loadOffer = createAction(ActionType.LOAD_OFFER, (payload) => ({
   payload,
-});
-export const loadComments = (payload) => ({
-  type: ActionType.LOAD_COMMENTS,
+}));
+export const loadComments = createAction(ActionType.LOAD_COMMENTS, (payload) => ({
   payload,
-});
-export const resetOffer = () => ({
-  type: ActionType.RESET_OFFER,
-});
-export const requireAuthorization = (payload) => ({
-  type: ActionType.REQUIRE_AUTHORIZATION,
+}));
+export const resetOffer = createAction(ActionType.RESET_OFFER, (payload) => ({
   payload,
-});
-export const setUser = (payload) => ({
-  type: ActionType.SET_USER,
+}));
+export const requireAuthorization = createAction(ActionType.REQUIRE_AUTHORIZATION, (payload) => ({
   payload,
-});
-export const logout = () => ({
-  type: ActionType.LOGOUT,
-});
-export const redirectToRoute = (payload) => ({
-  type: ActionType.REDIRECT_TO_ROUTE,
+}));
+export const setUser = createAction(ActionType.SET_USER, (payload) => ({
   payload,
-});
-export const setCommentFormIsLoading = (payload) => ({
-  type: ActionType.SET_COMMENT_FORM_IS_LOADING,
+}));
+export const logout = createAction(ActionType.LOGOUT, (payload) => ({
   payload,
-});
-export const setCommentFormError = (payload) => ({
-  type: ActionType.SET_COMMENT_FORM_ERROR,
+}));
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (payload) => ({
   payload,
-});
+}));
+export const setCommentFormIsLoading = createAction(ActionType.SET_COMMENT_FORM_IS_LOADING, (payload) => ({
+  payload,
+}));
+export const setCommentFormError = createAction(ActionType.SET_COMMENT_FORM_ERROR, (payload) => ({
+  payload,
+}));
