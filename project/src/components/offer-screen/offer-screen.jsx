@@ -188,10 +188,10 @@ const mapDispatchToProps  = (dispatch) => ({
   },
 });
 
-const mapStateToProps = ({OFFER, COMMENT}) => ({
+const mapStateToProps = ({OFFER}) => ({
   offer: OFFER.offer,
   nearbyOffers: OFFER.nearbyOffers,
-  comments: COMMENT.comments,
+  comments: OFFER.comments,
 });
 
 OfferScreen.propTypes = {

@@ -6,6 +6,9 @@ const initialState = {
   offersAreLoaded: false,
   offer: null,
   nearbyOffers: [],
+  comments: [],
+  commentFormIsLoading: false,
+  commentFormError: null,
 };
 
 const offer = (state = initialState, action) => {
@@ -29,6 +32,21 @@ const offer = (state = initialState, action) => {
         offer: null,
         nearbyOffers: [],
         comments: [],
+      };
+    case ActionType.LOAD_COMMENTS:
+      return {
+        ...state,
+        comments: action.payload.map((item) => adaptCommentToClient(item)),
+      };
+    case ActionType.SET_COMMENT_FORM_IS_LOADING:
+      return {
+        ...state,
+        commentFormIsLoading: action.payload,
+      };
+    case ActionType.SET_COMMENT_FORM_ERROR:
+      return {
+        ...state,
+        commentFormError: action.payload,
       };
     default:
       return state;
