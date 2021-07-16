@@ -1,11 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import CitiesList from '../cities-list/cities-list';
 import Content from './content/content';
-import cityProp from '../cities-list/city.prop';
-import cardOfferProp from '../offer-card/offer-card.prop';
 import {City} from '../../const';
 import EmptyContent from './empty-content/empty-content';
 import {getCity} from '../../store/other/selectors';
@@ -16,12 +13,9 @@ const getMainClassName = (contentIsEmpty) => {
   return `${className} ${contentIsEmpty ? 'page__main--index-empty' : ''}`;
 };
 
-function MainScreen(props) {
-  const {
-    city,
-    offers,
-  } = props;
-
+function MainScreen() {
+  const city = useSelector(getCity);
+  const offers = useSelector(getOffersByCurrentCity);
   const contentIsEmpty = offers.length === 0;
 
   return (
@@ -49,15 +43,4 @@ function MainScreen(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  city: getCity(state),
-  offers: getOffersByCurrentCity(state),
-});
-
-MainScreen.propTypes = {
-  city: cityProp,
-  offers: PropTypes.arrayOf(cardOfferProp).isRequired,
-};
-
-export {MainScreen};
-export default connect(mapStateToProps)(MainScreen);
+export default MainScreen;

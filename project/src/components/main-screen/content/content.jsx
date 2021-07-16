@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import Sorting from '../../sorting/sorting';
 import OffersList from '../../offers-list/offers-list';
@@ -14,8 +14,9 @@ function Content(props) {
   const {
     city,
     offers,
-    sortedOffers,
   } = props;
+  const sortType = useSelector(getSortType);
+  const sortedOffers = sortOffers(sortType, offers);
 
   return (
     <div className="cities">
@@ -42,15 +43,9 @@ function Content(props) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  sortedOffers: sortOffers(getSortType(state), ownProps.offers),
-});
-
 Content.propTypes = {
   city: cityProp,
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
-  sortedOffers: PropTypes.arrayOf(cardOfferProp).isRequired,
 };
 
-export {Content};
-export default connect(mapStateToProps)(Content);
+export default Content;

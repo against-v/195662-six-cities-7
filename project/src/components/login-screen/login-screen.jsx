@@ -1,17 +1,17 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {login} from '../../store/api-actions';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import {useLogin} from '../../hooks/use-login/useLogin';
-import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getIsAuthorized} from '../../store/user/selectors';
 
-function LoginScreen(props) {
-  const {
-    isAuthorized,
-    onSubmit,
-  } = props;
+function LoginScreen() {
+  const isAuthorized = useSelector(getIsAuthorized);
+  const dispatch = useDispatch();
+  const onSubmit = (authData) => {
+    dispatch(login(authData));
+  };
 
   const [loginRef, passwordRef, handleSubmit] = useLogin(onSubmit);
 
@@ -70,20 +70,4 @@ function LoginScreen(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  isAuthorized: getAuthorizationStatus(state) === AuthorizationStatus.AUTH,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  },
-});
-
-LoginScreen.propTypes = {
-  isAuthorized: PropTypes.bool.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};
-
-export {LoginScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+export default LoginScreen;
