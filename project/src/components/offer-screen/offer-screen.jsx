@@ -1,19 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import CommentsList from '../comments-list/comments-list';
 import InteractiveMap from '../interactive-map/interactive-map';
 import {getOffer} from '../../store/api-actions';
 
 import OffersList from '../offers-list/offers-list';
 import Preloader from '../preloader/preloader';
-import offerProp from '../offer-card/offer-card.prop';
-import commentProp from '../comment/comment.prop';
 import {resetOffer} from '../../store/action';
 import Rating from '../rating/rating';
 import {sortComments} from '../../utils';
-import {useOfferScreen} from '../../hooks/use-offer-screen/useOfferScreen';
 import {getComments, getNearbyOffers, getOffer as getCurrentOffer} from '../../store/offer/selectors';
+import {useParams} from 'react-router-dom';
 
 const getAvatarWrapperClassName = (status) => {
   const defaultClassName = 'property__avatar-wrapper  user__avatar-wrapper';
@@ -22,16 +19,19 @@ const getAvatarWrapperClassName = (status) => {
 
 const getActualComments = (comments) => sortComments(comments).slice(0, 10);
 
-function OfferScreen(props) {
-  const {
-    getData,
-    resetData,
-    offer,
-    comments,
-    nearbyOffers,
-  } = props;
+function OfferScreen() {
+  const offer = useSelector(getCurrentOffer);
+  const nearbyOffers = useSelector(getNearbyOffers);
+  const comments = useSelector(getComments);
+  const dispatch = useDispatch();
+  const {id} = useParams();
 
-  useOfferScreen(getData, resetData, offer);
+  useEffect(() => {
+    dispatch(getOffer(id));
+    return () => {
+      dispatch(resetOffer());
+    };
+  }, [id]);
 
   if (!offer) {
     return (
@@ -180,28 +180,4 @@ function OfferScreen(props) {
   );
 }
 
-const mapDispatchToProps  = (dispatch) => ({
-  getData(id) {
-    dispatch(getOffer(id));
-  },
-  resetData() {
-    dispatch(resetOffer());
-  },
-});
-
-const mapStateToProps = (state) => ({
-  offer: getCurrentOffer(state),
-  nearbyOffers: getNearbyOffers(state),
-  comments: getComments(state),
-});
-
-OfferScreen.propTypes = {
-  getData: PropTypes.func,
-  resetData: PropTypes.func,
-  offer: offerProp,
-  nearbyOffers: PropTypes.arrayOf(offerProp),
-  comments: PropTypes.arrayOf(commentProp),
-};
-
-export {OfferScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(OfferScreen);
+export default OfferScreen;
