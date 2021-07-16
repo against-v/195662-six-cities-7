@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import OfferCard from '../offer-card/offer-card';
@@ -10,8 +10,13 @@ function OffersList(props) {
   const {
     offers,
     className,
-    handleSetActiveCardId,
   } = props;
+
+  const dispatch = useDispatch();
+  const handleSetActiveCardId = (activeCard) => {
+    dispatch(setActiveCardId(activeCard));
+  };
+
   return (
     <div className={`places__list ${className}`}>
       {
@@ -27,17 +32,9 @@ function OffersList(props) {
   );
 }
 
-const mapDispatchToProp = (dispatch) => ({
-  handleSetActiveCardId(activeCard) {
-    dispatch(setActiveCardId(activeCard));
-  },
-});
-
 OffersList.propTypes = {
   className: PropTypes.string,
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
-  handleSetActiveCardId: PropTypes.func.isRequired,
 };
 
-export {OffersList};
-export default connect(null, mapDispatchToProp)(OffersList);
+export default OffersList;
