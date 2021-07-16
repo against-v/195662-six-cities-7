@@ -31,7 +31,7 @@ function OfferScreen() {
     return () => {
       dispatch(resetOffer());
     };
-  }, [id]);
+  }, [id, dispatch]);
 
   if (!offer) {
     return (
