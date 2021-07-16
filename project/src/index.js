@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import {createAPI} from './api';
 import {checkAuth, getOffersList} from './store/api-actions';
 import thunk from 'redux-thunk';
-import reducer from './store/reducer';
+import rootReducer from './store/root-reducer';
 import App from './components/app/app';
 import {requireAuthorization} from './store/action';
 import {redirect} from './store/middlewares/redirect';
@@ -16,7 +16,7 @@ const api = createAPI(
 );
 
 const store = createStore(
-  reducer,
+  rootReducer,
   applyMiddleware(
     thunk.withExtraArgument(api),
     redirect,
