@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import cityProp from './city.prop';
 import {setCity} from '../../store/action';
@@ -10,9 +10,13 @@ import {getCity} from '../../store/other/selectors';
 function CitiesList(props) {
   const {
     list,
-    currentCity,
-    handleSetCity,
   } = props;
+
+  const currentCity = useSelector(getCity);
+  const dispatch = useDispatch();
+  const handleSetCity = (city) => {
+    dispatch(setCity(city));
+  };
 
   const [getTabClassName, handleClick] = useCitiesList(currentCity, handleSetCity);
 
@@ -40,21 +44,8 @@ function CitiesList(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  currentCity: getCity(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  handleSetCity(city) {
-    dispatch(setCity(city));
-  },
-});
-
 CitiesList.propTypes = {
   list: PropTypes.arrayOf(cityProp),
-  currentCity: cityProp,
-  handleSetCity: PropTypes.func.isRequired,
 };
 
-export {CitiesList};
-export default connect(mapStateToProps, mapDispatchToProps)(CitiesList);
+export default CitiesList;

@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {Router as BrowserRouter} from 'react-router-dom';
-import cardOfferProp from '../offer-card/offer-card.prop';
 import browserHistory from '../../browser-history';
 
 import Preloader from '../preloader/preloader';
@@ -11,12 +9,10 @@ import {AuthorizationStatus} from '../../const';
 import {getOffers, getOffersAreLoaded} from '../../store/offer/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 
-function App(props) {
-  const {
-    offers,
-    offersAreLoaded,
-    authorizationStatus,
-  } = props;
+function App() {
+  const offers = useSelector(getOffers);
+  const offersAreLoaded = useSelector(getOffersAreLoaded);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.UNKNOWN && !offersAreLoaded) {
     return (
@@ -34,17 +30,4 @@ function App(props) {
   );
 }
 
-App.propTypes = {
-  offers: PropTypes.arrayOf(cardOfferProp).isRequired,
-  offersAreLoaded: PropTypes.bool.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  offers: getOffers(state),
-  offersAreLoaded: getOffersAreLoaded(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-export {App};
-export default connect(mapStateToProps)(App);
+export default App;

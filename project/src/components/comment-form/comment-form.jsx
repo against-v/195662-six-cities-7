@@ -1,16 +1,23 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {useSelector, useDispatch} from 'react-redux';
 import {createComment} from '../../store/api-actions';
 import {setCommentFormIsLoading, setCommentFormError} from '../../store/action';
 import {useCommentForm} from '../../hooks/use-comment-form/useCommentForm';
 import {getCommentFormError, getCommentFormIsLoading} from '../../store/offer/selectors';
 
-function CommentForm(props) {
-  const {
-    formIsLoading,
-    error,
-  } = props;
+function CommentForm() {
+  const formIsLoading = useSelector(getCommentFormIsLoading);
+  const error = useSelector(getCommentFormError);
+  const dispatch = useDispatch();
+  const onSubmit = (id, commentData) => {
+    dispatch(createComment(id, commentData));
+  };
+  const setFormDisabled = () => {
+    dispatch(setCommentFormIsLoading(true));
+  };
+  const resetError = () => {
+    dispatch(setCommentFormError(null));
+  };
 
   const [
     ratingValues,
@@ -18,7 +25,13 @@ function CommentForm(props) {
     buttonDisabled,
     handleFieldChange,
     handleSubmit,
-  ] = useCommentForm(props);
+  ] = useCommentForm({
+    formIsLoading,
+    error,
+    onSubmit,
+    setFormDisabled,
+    resetError,
+  });
 
   return (
     <form
@@ -86,27 +99,4 @@ function CommentForm(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, data) {
-    dispatch(createComment(id, data));
-  },
-  setFormDisabled() {
-    dispatch(setCommentFormIsLoading(true));
-  },
-  resetError() {
-    dispatch(setCommentFormError(null));
-  },
-});
-
-const mapStateToProps = (state) => ({
-  formIsLoading: getCommentFormIsLoading(state),
-  error: getCommentFormError(state),
-});
-
-CommentForm.propTypes = {
-  formIsLoading: PropTypes.bool.isRequired,
-  error: PropTypes.string,
-};
-
-export {CommentForm};
-export default connect(mapStateToProps, mapDispatchToProps)(CommentForm);
+export default CommentForm;
