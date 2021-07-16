@@ -1,10 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {SortType} from '../../const';
 import {setSortType} from '../../store/action';
-import sortTypeProp from './sort-type.prop';
 import {useSorting} from '../../hooks/use-sorting/useSorting';
 import {getSortType} from '../../store/other/selectors';
 
@@ -13,11 +11,13 @@ const getOptionClassName = (sortTypeId, currentSortTypeId) => {
   return `${className} ${sortTypeId === currentSortTypeId ? 'places__option--active' : ''}`;
 };
 
-function Sorting(props) {
-  const {
-    currentSortType,
-    handleSetSortType,
-  } = props;
+function Sorting() {
+  const currentSortType = useSelector(getSortType);
+  const dispatch = useDispatch();
+  const handleSetSortType = (sortType) => {
+    dispatch(setSortType((sortType)));
+  };
+
 
   const [showOptions, setShowOptions, handleClickOption, listClassName] = useSorting(handleSetSortType);
 
@@ -53,20 +53,4 @@ function Sorting(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  currentSortType: getSortType(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  handleSetSortType(sortType) {
-    dispatch(setSortType((sortType)));
-  },
-});
-
-Sorting.propTypes = {
-  currentSortType: sortTypeProp,
-  handleSetSortType: PropTypes.func.isRequired,
-};
-
-export {Sorting};
-export default connect(mapStateToProps, mapDispatchToProps)(Sorting);
+export default Sorting;
