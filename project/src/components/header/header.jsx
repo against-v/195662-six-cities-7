@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import GuestNav from './guest-nav/guest-nav';
 import UserNav from './user-nav/user-nav';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 function Header(props) {
   const {
@@ -31,8 +32,8 @@ function Header(props) {
   );
 }
 
-const mapStateToProps = ({USER}) => ({
-  isAuthorized: USER.authorizationStatus === AuthorizationStatus.AUTH,
+const mapStateToProps = (state) => ({
+  isAuthorized: getAuthorizationStatus(state) === AuthorizationStatus.AUTH,
 });
 
 Header.propTypes = {

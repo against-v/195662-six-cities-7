@@ -7,6 +7,7 @@ import commentProp from '../comment/comment.prop';
 import CommentForm from '../comment-form/comment-form';
 import Comment from '../comment/comment';
 import {AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 function CommentsList(props) {
   const {
@@ -32,8 +33,8 @@ function CommentsList(props) {
   );
 }
 
-const mapStateToProps = ({USER}) => ({
-  isAuthorized: USER.authorizationStatus === AuthorizationStatus.AUTH,
+const mapStateToProps = (state) => ({
+  isAuthorized: getAuthorizationStatus(state) === AuthorizationStatus.AUTH,
 });
 
 CommentsList.propTypes = {
@@ -44,3 +45,4 @@ CommentsList.propTypes = {
 
 export {CommentsList};
 export default connect(mapStateToProps)(CommentsList);
+

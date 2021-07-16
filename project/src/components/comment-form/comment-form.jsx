@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {createComment} from '../../store/api-actions';
 import {setCommentFormIsLoading, setCommentFormError} from '../../store/action';
 import {useCommentForm} from '../../hooks/use-comment-form/useCommentForm';
+import {getCommentFormError, getCommentFormIsLoading} from '../../store/offer/selectors';
 
 function CommentForm(props) {
   const {
@@ -97,9 +98,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const mapStateToProps = ({OFFER}) => ({
-  formIsLoading: OFFER.commentFormIsLoading,
-  error: OFFER.commentFormError,
+const mapStateToProps = (state) => ({
+  formIsLoading: getCommentFormIsLoading(state),
+  error: getCommentFormError(state),
 });
 
 CommentForm.propTypes = {

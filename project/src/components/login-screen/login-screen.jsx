@@ -1,10 +1,11 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {login} from '../../store/api-actions';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {useLogin} from '../../hooks/use-login/useLogin';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 function LoginScreen(props) {
   const {
@@ -69,8 +70,8 @@ function LoginScreen(props) {
   );
 }
 
-const mapStateToProps = ({USER}) => ({
-  isAuthorized: USER.authorizationStatus === AuthorizationStatus.AUTH,
+const mapStateToProps = (state) => ({
+  isAuthorized: getAuthorizationStatus(state) === AuthorizationStatus.AUTH,
 });
 
 const mapDispatchToProps = (dispatch) => ({

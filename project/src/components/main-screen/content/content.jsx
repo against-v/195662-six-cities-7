@@ -8,6 +8,7 @@ import InteractiveMap from '../../interactive-map/interactive-map';
 import cardOfferProp from '../../offer-card/offer-card.prop';
 import cityProp from '../../cities-list/city.prop';
 import {sortOffers} from '../../../utils';
+import {getSortType} from '../../../store/other/selectors';
 
 function Content(props) {
   const {
@@ -41,8 +42,8 @@ function Content(props) {
   );
 }
 
-const mapStateToProps = ({OTHER}, ownProps) => ({
-  sortedOffers: sortOffers(OTHER.sortType, ownProps.offers),
+const mapStateToProps = (state, ownProps) => ({
+  sortedOffers: sortOffers(getSortType(state), ownProps.offers),
 });
 
 Content.propTypes = {

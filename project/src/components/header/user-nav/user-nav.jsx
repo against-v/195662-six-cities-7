@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {logout} from '../../../store/api-actions';
+import {getUserEmail} from '../../../store/user/selectors';
 
 function UserNav(props) {
   const {
@@ -34,8 +35,8 @@ function UserNav(props) {
   );
 }
 
-const mapStateToProps = ({USER}) => ({
-  email: USER.user.email,
+const mapStateToProps = (state) => ({
+  email: getUserEmail(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

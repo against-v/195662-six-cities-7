@@ -9,6 +9,7 @@ import locationProp from '../main-screen/location.prop';
 import {UrlMapPin} from '../../const';
 
 import useInteractiveMap from '../../hooks/use-interactiv-map/useInteractiveMap';
+import {getActiveCardId} from '../../store/other/selectors';
 
 function InteractiveMap(props) {
   const {
@@ -63,8 +64,8 @@ function InteractiveMap(props) {
   );
 }
 
-const mapStateToProps = ({OTHER}) => ({
-  activePointId: OTHER.activeCardId,
+const mapStateToProps = (state) => ({
+  activePointId: getActiveCardId(state),
 });
 
 InteractiveMap.propTypes = {

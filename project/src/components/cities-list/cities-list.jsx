@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import cityProp from './city.prop';
 import {setCity} from '../../store/action';
 import {useCitiesList} from '../../hooks/use-cities-list/useCitiesList';
+import {getCity} from '../../store/other/selectors';
 
 function CitiesList(props) {
   const {
@@ -39,8 +40,8 @@ function CitiesList(props) {
   );
 }
 
-const mapStateToProps = ({OTHER}) => ({
-  currentCity: OTHER.city,
+const mapStateToProps = (state) => ({
+  currentCity: getCity(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

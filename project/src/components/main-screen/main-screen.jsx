@@ -8,6 +8,8 @@ import cityProp from '../cities-list/city.prop';
 import cardOfferProp from '../offer-card/offer-card.prop';
 import {City} from '../../const';
 import EmptyContent from './empty-content/empty-content';
+import {getCity} from '../../store/other/selectors';
+import {getOffersByCurrentCity} from '../../store/offer/selectors';
 
 const getMainClassName = (contentIsEmpty) => {
   const className = 'page__main page__main--index';
@@ -47,9 +49,9 @@ function MainScreen(props) {
   );
 }
 
-const mapStateToProps = ({OFFER, OTHER}) => ({
-  city: OTHER.city,
-  offers: OFFER.offers.filter((item) => item.city === OTHER.city.name),
+const mapStateToProps = (state) => ({
+  city: getCity(state),
+  offers: getOffersByCurrentCity(state),
 });
 
 MainScreen.propTypes = {

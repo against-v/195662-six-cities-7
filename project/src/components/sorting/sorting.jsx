@@ -6,6 +6,7 @@ import {SortType} from '../../const';
 import {setSortType} from '../../store/action';
 import sortTypeProp from './sort-type.prop';
 import {useSorting} from '../../hooks/use-sorting/useSorting';
+import {getSortType} from '../../store/other/selectors';
 
 const getOptionClassName = (sortTypeId, currentSortTypeId) => {
   const className = 'places__option';
@@ -52,8 +53,8 @@ function Sorting(props) {
   );
 }
 
-const mapStateToProps = ({OTHER}) => ({
-  currentSortType: OTHER.sortType,
+const mapStateToProps = (state) => ({
+  currentSortType: getSortType(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

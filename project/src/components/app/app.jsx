@@ -8,6 +8,8 @@ import browserHistory from '../../browser-history';
 import Preloader from '../preloader/preloader';
 import Page from '../page/page';
 import {AuthorizationStatus} from '../../const';
+import {getOffers, getOffersAreLoaded} from '../../store/offer/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 function App(props) {
   const {
@@ -38,10 +40,10 @@ App.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({USER, OFFER}) => ({
-  offers: OFFER.offers,
-  offersAreLoaded: OFFER.offersAreLoaded,
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state) => ({
+  offers: getOffers(state),
+  offersAreLoaded: getOffersAreLoaded(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 export {App};

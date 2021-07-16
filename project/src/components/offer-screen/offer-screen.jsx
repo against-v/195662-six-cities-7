@@ -13,6 +13,7 @@ import {resetOffer} from '../../store/action';
 import Rating from '../rating/rating';
 import {sortComments} from '../../utils';
 import {useOfferScreen} from '../../hooks/use-offer-screen/useOfferScreen';
+import {getComments, getNearbyOffers, getOffer as getCurrentOffer} from '../../store/offer/selectors';
 
 const getAvatarWrapperClassName = (status) => {
   const defaultClassName = 'property__avatar-wrapper  user__avatar-wrapper';
@@ -188,10 +189,10 @@ const mapDispatchToProps  = (dispatch) => ({
   },
 });
 
-const mapStateToProps = ({OFFER}) => ({
-  offer: OFFER.offer,
-  nearbyOffers: OFFER.nearbyOffers,
-  comments: OFFER.comments,
+const mapStateToProps = (state) => ({
+  offer: getCurrentOffer(state),
+  nearbyOffers: getNearbyOffers(state),
+  comments: getComments(state),
 });
 
 OfferScreen.propTypes = {
