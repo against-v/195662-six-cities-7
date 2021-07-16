@@ -34,8 +34,8 @@ function UserNav(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  email: state.user.email,
+const mapStateToProps = ({USER}) => ({
+  email: USER.user.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -41,8 +41,8 @@ function Content(props) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  sortedOffers: sortOffers(state.sortType, ownProps.offers),
+const mapStateToProps = ({OTHER}, ownProps) => ({
+  sortedOffers: sortOffers(OTHER.sortType, ownProps.offers),
 });
 
 Content.propTypes = {

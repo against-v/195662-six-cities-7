@@ -47,9 +47,9 @@ function MainScreen(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: state.offers.filter((item) => item.city === state.city.name),
+const mapStateToProps = ({OFFER, OTHER}) => ({
+  city: OTHER.city,
+  offers: OFFER.offers.filter((item) => item.city === OTHER.city.name),
 });
 
 MainScreen.propTypes = {

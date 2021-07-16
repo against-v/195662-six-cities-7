@@ -97,9 +97,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const mapStateToProps = (state) => ({
-  formIsLoading: state.commentFormIsLoading,
-  error: state.commentFormError,
+const mapStateToProps = ({COMMENT}) => ({
+  formIsLoading: COMMENT.commentFormIsLoading,
+  error: COMMENT.commentFormError,
 });
 
 CommentForm.propTypes = {

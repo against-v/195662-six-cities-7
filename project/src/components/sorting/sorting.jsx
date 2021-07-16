@@ -52,8 +52,8 @@ function Sorting(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  currentSortType: state.sortType,
+const mapStateToProps = ({OTHER}) => ({
+  currentSortType: OTHER.sortType,
 });
 
 const mapDispatchToProps = (dispatch) => ({

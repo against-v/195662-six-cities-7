@@ -63,8 +63,8 @@ function InteractiveMap(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  activePointId: state.activeCardId,
+const mapStateToProps = ({OTHER}) => ({
+  activePointId: OTHER.activeCardId,
 });
 
 InteractiveMap.propTypes = {

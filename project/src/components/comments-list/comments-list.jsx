@@ -32,8 +32,8 @@ function CommentsList(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  isAuthorized: state.authorizationStatus === AuthorizationStatus.AUTH,
+const mapStateToProps = ({USER}) => ({
+  isAuthorized: USER.authorizationStatus === AuthorizationStatus.AUTH,
 });
 
 CommentsList.propTypes = {
