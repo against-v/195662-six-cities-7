@@ -34,10 +34,7 @@ function MainScreen() {
             city={city}
           />
           :
-          <Content
-            city={city}
-            offers={offers}
-          />
+          <Content/>
       }
     </main>
   );
