@@ -6,7 +6,7 @@ const MAX_LENGTH = 300;
 
 const ratingValues = [5, 4, 3, 2, 1];
 
-const setButtonDisabled = (commentLength, rating) => {
+const getSubmitDisabledStatus = (commentLength, rating) => {
   const validLength = commentLength >= MIN_LENGTH && commentLength < MAX_LENGTH;
   return !(validLength && rating);
 };
@@ -35,7 +35,7 @@ export const useCommentForm = (props) => {
     });
   };
 
-  const buttonDisabled = setButtonDisabled(data.comment.length, data.rating);
+  const submitDisabled = getSubmitDisabledStatus(data.comment.length, data.rating);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,7 +55,7 @@ export const useCommentForm = (props) => {
   return [
     ratingValues,
     data,
-    buttonDisabled,
+    submitDisabled,
     handleFieldChange,
     handleSubmit,
   ];
