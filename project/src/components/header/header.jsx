@@ -1,15 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import GuestNav from './guest-nav/guest-nav';
 import UserNav from './user-nav/user-nav';
+import {getIsAuthorized} from '../../store/user/selectors';
 
-function Header(props) {
-  const {
-    isAuthorized,
-  } = props;
+function Header() {
+  const isAuthorized = useSelector(getIsAuthorized);
+
   return (
     <header className="header">
       <div className="container">
@@ -31,13 +30,4 @@ function Header(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  isAuthorized: state.authorizationStatus === AuthorizationStatus.AUTH,
-});
-
-Header.propTypes = {
-  isAuthorized: PropTypes.bool.isRequired,
-};
-
-export {Header};
-export default connect(mapStateToProps)(Header);
+export default Header;

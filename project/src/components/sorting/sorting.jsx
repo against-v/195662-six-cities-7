@@ -1,32 +1,25 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import React from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {SortType} from '../../const';
-import {ActionCreator} from '../../store/action';
-import sortTypeProp from './sort-type.prop';
+import {setSortType} from '../../store/action';
+import {useSorting} from '../../hooks/use-sorting/useSorting';
+import {getSortType} from '../../store/other/selectors';
 
-function Sorting(props) {
-  const {
-    currentSortType,
-    setSortType,
-  } = props;
-  const [showOptions, setShowOptions] = useState(false);
+const getOptionClassName = (sortTypeId, currentSortTypeId) => {
+  const className = 'places__option';
+  return `${className} ${sortTypeId === currentSortTypeId ? 'places__option--active' : ''}`;
+};
 
-  const getListClassName = () => {
-    const className = 'places__options places__options--custom';
-    return `${className} ${showOptions ? 'places__options--opened' : ''}`;
-  };
-  const getOptionClassName = (id) => {
-    const className = 'places__option';
-    return `${className} ${id === currentSortType.id ? 'places__option--active' : ''}`;
+function Sorting() {
+  const currentSortType = useSelector(getSortType);
+  const dispatch = useDispatch();
+  const handleSetSortType = (sortType) => {
+    dispatch(setSortType((sortType)));
   };
 
-  const handleClickOption = (sortType) => {
-    setSortType(sortType);
-    setShowOptions(false);
-  };
 
+  const [showOptions, setShowOptions, handleClickOption, listClassName] = useSorting(handleSetSortType);
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -41,13 +34,13 @@ function Sorting(props) {
         </svg>
       </span>
       <ul
-        className={getListClassName()}
+        className={listClassName}
       >
         {
           Object.values(SortType).map((item) => (
             <li
               key={item.id}
-              className={getOptionClassName(item.id)}
+              className={getOptionClassName(item.id, currentSortType.id)}
               tabIndex="0"
               onClick={() => handleClickOption(item)}
             >
@@ -60,20 +53,4 @@ function Sorting(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  currentSortType: state.sortType,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  setSortType(sortType) {
-    dispatch(ActionCreator.setSortType((sortType)));
-  },
-});
-
-Sorting.propTypes = {
-  currentSortType: sortTypeProp,
-  setSortType: PropTypes.func.isRequired,
-};
-
-export {Sorting};
-export default connect(mapStateToProps, mapDispatchToProps)(Sorting);
+export default Sorting;

@@ -1,35 +1,37 @@
-import React, {useEffect } from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {useParams} from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import CommentsList from '../comments-list/comments-list';
 import InteractiveMap from '../interactive-map/interactive-map';
 import {getOffer} from '../../store/api-actions';
 
 import OffersList from '../offers-list/offers-list';
 import Preloader from '../preloader/preloader';
-import offerProp from '../offer-card/offer-card.prop';
-import commentProp from '../comment/comment.prop';
-import {ActionCreator} from '../../store/action';
+import {resetOffer} from '../../store/action';
 import Rating from '../rating/rating';
+import {sortComments} from '../../utils';
+import {getComments, getNearbyOffers, getOffer as getCurrentOffer} from '../../store/offer/selectors';
+import {useParams} from 'react-router-dom';
 
-function OfferScreen(props) {
-  const {
-    getData,
-    resetData,
-    offer,
-    comments,
-    nearbyOffers,
-  } = props;
+const getAvatarWrapperClassName = (status) => {
+  const defaultClassName = 'property__avatar-wrapper  user__avatar-wrapper';
+  return status ? `${defaultClassName} property__avatar-wrapper--pro` : defaultClassName;
+};
 
+const getActualComments = (comments) => sortComments(comments).slice(0, 10);
+
+function OfferScreen() {
+  const offer = useSelector(getCurrentOffer);
+  const nearbyOffers = useSelector(getNearbyOffers);
+  const comments = useSelector(getComments);
+  const dispatch = useDispatch();
   const {id} = useParams();
 
   useEffect(() => {
-    getData(id);
+    dispatch(getOffer(id));
     return () => {
-      resetData();
+      dispatch(resetOffer());
     };
-  }, [getData, id, resetData]);
+  }, [id, dispatch]);
 
   if (!offer) {
     return (
@@ -51,11 +53,6 @@ function OfferScreen(props) {
     host,
     cityLocation,
   } = offer;
-
-  const getAvatarWrapperClassName = (status) => {
-    const defaultClassName = 'property__avatar-wrapper  user__avatar-wrapper';
-    return status ? `${defaultClassName} property__avatar-wrapper--pro` : defaultClassName;
-  };
 
   const avatarWrapperClassName = getAvatarWrapperClassName(host.isPro);
 
@@ -158,7 +155,8 @@ function OfferScreen(props) {
               </div>
             </div>
             <CommentsList
-              comments={comments}
+              commentsCount={comments.length}
+              comments={getActualComments(comments)}
             />
           </div>
         </div>
@@ -182,28 +180,4 @@ function OfferScreen(props) {
   );
 }
 
-const mapDispatchToProps  = (dispatch) => ({
-  getData(id) {
-    dispatch(getOffer(id));
-  },
-  resetData() {
-    dispatch(ActionCreator.resetOffer());
-  },
-});
-
-const mapStateToProps = (state) => ({
-  offer: state.offer,
-  nearbyOffers: state.nearbyOffers,
-  comments: state.comments,
-});
-
-OfferScreen.propTypes = {
-  getData: PropTypes.func,
-  resetData: PropTypes.func,
-  offer: offerProp,
-  nearbyOffers: PropTypes.arrayOf(offerProp),
-  comments: PropTypes.arrayOf(commentProp),
-};
-
-export {OfferScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(OfferScreen);
+export default OfferScreen;

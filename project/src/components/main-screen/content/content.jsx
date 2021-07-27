@@ -1,20 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import Sorting from '../../sorting/sorting';
 import OffersList from '../../offers-list/offers-list';
 import InteractiveMap from '../../interactive-map/interactive-map';
-import cardOfferProp from '../../offer-card/offer-card.prop';
-import cityProp from '../../cities-list/city.prop';
-import {sortOffers} from '../../../utils';
+import {getOffersByCurrentCity, getSortedOffers} from '../../../store/offer/selectors';
+import {getCity} from '../../../store/other/selectors';
 
-function Content(props) {
-  const {
-    city,
-    offers,
-    sortedOffers,
-  } = props;
+function Content() {
+  const city = useSelector(getCity);
+  const offers = useSelector(getOffersByCurrentCity);
+  const sortedOffers = useSelector(getSortedOffers);
 
   return (
     <div className="cities">
@@ -41,15 +37,4 @@ function Content(props) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  sortedOffers: sortOffers(state.sortType, ownProps.offers),
-});
-
-Content.propTypes = {
-  city: cityProp,
-  offers: PropTypes.arrayOf(cardOfferProp).isRequired,
-  sortedOffers: PropTypes.arrayOf(cardOfferProp).isRequired,
-};
-
-export {Content};
-export default connect(mapStateToProps)(Content);
+export default Content;

@@ -1,9 +1,19 @@
-import {ActionCreator} from './action';
+import {
+  loadOffers,
+  loadOffer,
+  redirectToRoute,
+  setUser,
+  requireAuthorization,
+  logout as closeSession,
+  loadComments,
+  setCommentFormIsLoading,
+  setCommentFormError
+} from './action';
 import {APIRoute, AppRoute, AuthorizationStatus, HttpStatus} from '../const';
 
 export const getOffersList = () => (dispatch, _getState, api) => {
   api.get(APIRoute.HOTELS)
-    .then(({data}) => dispatch(ActionCreator.loadOffers(data)));
+    .then(({data}) => dispatch(loadOffers(data)));
 };
 
 export const getOffer = (id) => (dispatch, _getState, api) => {
@@ -13,7 +23,7 @@ export const getOffer = (id) => (dispatch, _getState, api) => {
     api.get(`${APIRoute.COMMENTS}/${id}`),
   ]).then((res) => {
     const [offer, nearbyOffers, comments] =  res.map((item) => item.data);
-    dispatch(ActionCreator.loadOffer({
+    dispatch(loadOffer({
       offer,
       nearbyOffers,
       comments,
@@ -21,7 +31,7 @@ export const getOffer = (id) => (dispatch, _getState, api) => {
   }).catch(({response}) => {
     const {status} = response;
     if (status === HttpStatus.BAD_REQUEST || status === HttpStatus.NOT_FOUND) {
-      dispatch(ActionCreator.redirectToRoute(AppRoute.NOT_FOUND));
+      dispatch(redirectToRoute(AppRoute.NOT_FOUND));
     }
   });
 };
@@ -29,8 +39,8 @@ export const getOffer = (id) => (dispatch, _getState, api) => {
 export const checkAuth = () => (dispatch, _getState, api) => {
   api.get(APIRoute.LOGIN)
     .then(({data}) => {
-      dispatch(ActionCreator.setUser(data));
-      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+      dispatch(setUser(data));
+      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
     })
     .catch(() => {});
 };
@@ -39,9 +49,9 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post(APIRoute.LOGIN, {email, password})
     .then(({data}) => {
       localStorage.setItem('token', data.token);
-      dispatch(ActionCreator.setUser(data));
-      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
-      dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT));
+      dispatch(setUser(data));
+      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
+      dispatch(redirectToRoute(AppRoute.ROOT));
     });
 };
 
@@ -49,14 +59,19 @@ export const logout = () => (dispatch, _getState, api) => {
   api.delete(APIRoute.LOGOUT)
     .then(() => {
       localStorage.removeItem('token');
-      dispatch(ActionCreator.logout());
-      dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT));
+      dispatch(closeSession());
+      dispatch(redirectToRoute(AppRoute.ROOT));
     });
 };
 
 export const createComment = (id, payload) => (dispatch, _getState, api) => {
   api.post(`${APIRoute.COMMENTS}/${id}`, payload)
     .then(({data}) => {
-      dispatch(ActionCreator.loadComments(data));
+      dispatch(loadComments(data));
+      dispatch(setCommentFormIsLoading(false));
+    })
+    .catch((error) => {
+      dispatch(setCommentFormError(error.response.data.error));
+      dispatch(setCommentFormIsLoading(false));
     });
 };

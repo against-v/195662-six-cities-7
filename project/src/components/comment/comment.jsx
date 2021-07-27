@@ -4,17 +4,17 @@ import Rating from '../rating/rating';
 
 import commentProp from './comment.prop';
 
-function Comment({data}) {
+const adaptDate = (originalDate) => {
+  const newDate = new Date(originalDate);
+  return newDate.toLocaleString('en', {
+    month: 'long',
+    year: 'numeric',
+  });
+};
+
+function Comment(props) {
+  const {data} = props;
   const {comment, date, rating, user} = data;
-
-  const adaptDate = (originalDate) => {
-    const newDate = new Date(originalDate);
-    return newDate.toLocaleString('en', {
-      month: 'long',
-      year: 'numeric',
-    });
-  };
-
   return (
     <li className="reviews__item">
       <div className="reviews__user user">

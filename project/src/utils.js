@@ -12,3 +12,5 @@ export const sortOffers = (sortType, offers) => {
       return offers;
   }
 };
+
+export const sortComments = (comments) => comments.slice().sort((a, b) => new Date(b.date) - new Date(a.date));

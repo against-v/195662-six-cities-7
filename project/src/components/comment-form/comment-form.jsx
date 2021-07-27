@@ -1,45 +1,37 @@
-import React, { useState } from 'react';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import React from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {createComment} from '../../store/api-actions';
-import {useParams} from 'react-router-dom';
+import {setCommentFormIsLoading, setCommentFormError} from '../../store/action';
+import {useCommentForm} from '../../hooks/use-comment-form/useCommentForm';
+import {getCommentFormError, getCommentFormIsLoading} from '../../store/offer/selectors';
 
-const MIN_LENGTH = 50;
-const MAX_LENGTH = 300;
+function CommentForm() {
+  const formIsLoading = useSelector(getCommentFormIsLoading);
+  const error = useSelector(getCommentFormError);
+  const dispatch = useDispatch();
+  const onSubmit = (id, commentData) => {
+    dispatch(createComment(id, commentData));
+  };
+  const setFormDisabled = () => {
+    dispatch(setCommentFormIsLoading(true));
+  };
+  const resetError = () => {
+    dispatch(setCommentFormError(null));
+  };
 
-function CommentForm(props) {
-  const {
+  const [
+    ratingValues,
+    data,
+    submitDisabled,
+    handleFieldChange,
+    handleSubmit,
+  ] = useCommentForm({
+    formIsLoading,
+    error,
     onSubmit,
-  } = props;
-
-  const {id} = useParams();
-
-  const ratingValues = [5, 4, 3, 2, 1];
-
-  const [data, setData] = useState({
-    rating: null,
-    comment: '',
+    setFormDisabled,
+    resetError,
   });
-
-  const handleFieldChange = (e) => {
-    const {name, value} = e.target;
-    setData({
-      ...data,
-      [name]: value,
-    });
-  };
-
-  const setButtonDisabled = () => {
-    const commentLength = data.comment.length;
-    const validLength = commentLength > MIN_LENGTH && commentLength < MAX_LENGTH;
-    return !(validLength && data.rating);
-  };
-  const buttonDisabled = setButtonDisabled();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(id, data);
-  };
 
   return (
     <form
@@ -55,9 +47,13 @@ function CommentForm(props) {
               className="form__rating-input visually-hidden"
               name="rating"
               value={val}
+              checked={data.rating === val}
               id={`${val}-stars`}
               type="radio"
-              onChange={handleFieldChange}
+              onChange={(e) => {
+                handleFieldChange(e.target.name, val);
+              }}
+              disabled={formIsLoading}
             />
             <label
               htmlFor={`${val}-stars`}
@@ -76,28 +72,31 @@ function CommentForm(props) {
         id="review"
         name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleFieldChange}
+        disabled={formIsLoading}
+        value={data.comment}
+        onChange={(e) => {
+          handleFieldChange(e.target.name, e.target.value);
+        }}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and
           describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={buttonDisabled}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={submitDisabled || formIsLoading}>Submit</button>
       </div>
+      {error &&
+      <p
+        style={{
+          color: 'red',
+          marginBottom: 0,
+        }}
+      >
+        {error}
+      </p>}
+
     </form>
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, data) {
-    dispatch(createComment(id, data));
-  },
-});
-
-CommentForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
-
-export {CommentForm};
-export default connect(null, mapDispatchToProps)(CommentForm);
+export default CommentForm;

@@ -1,5 +1,5 @@
 import React, {useRef, useEffect} from 'react';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -9,15 +9,16 @@ import locationProp from '../main-screen/location.prop';
 import {UrlMapPin} from '../../const';
 
 import useInteractiveMap from '../../hooks/use-interactiv-map/useInteractiveMap';
+import {getActiveCardId} from '../../store/other/selectors';
 
 function InteractiveMap(props) {
   const {
     defaultLocation,
     points,
-    activePointId,
   } = props;
   const mapRef = useRef(null);
   const map = useInteractiveMap(mapRef, defaultLocation);
+  const activePointId = useSelector(getActiveCardId);
 
   useEffect(() => {
     const markers = leaflet.layerGroup();
@@ -63,17 +64,11 @@ function InteractiveMap(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  activePointId: state.activeCardId,
-});
-
 InteractiveMap.propTypes = {
   defaultLocation: locationProp,
   points: PropTypes.arrayOf(PropTypes.shape({
     location: locationProp,
   })),
-  activePointId: PropTypes.number,
 };
 
-export {InteractiveMap};
-export default connect(mapStateToProps)(InteractiveMap);
+export default InteractiveMap;

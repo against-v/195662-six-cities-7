@@ -1,13 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {logout} from '../../../store/api-actions';
+import {getUserEmail} from '../../../store/user/selectors';
 
-function UserNav(props) {
-  const {
-    email,
-    handleLogout,
-  } = props;
+function UserNav() {
+  const email = useSelector(getUserEmail);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <ul className="header__nav-list">
@@ -34,20 +35,4 @@ function UserNav(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  email: state.user.email,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  handleLogout() {
-    dispatch(logout());
-  },
-});
-
-UserNav.propTypes = {
-  email: PropTypes.string.isRequired,
-  handleLogout: PropTypes.func.isRequired,
-};
-
-export {UserNav};
-export default connect(mapStateToProps, mapDispatchToProps)(UserNav);
+export default UserNav;

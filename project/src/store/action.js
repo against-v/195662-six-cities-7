@@ -1,3 +1,5 @@
+import {createAction} from '@reduxjs/toolkit';
+
 export const ActionType = {
   SET_CITY: 'setCity',
   SET_SORT_TYPE: 'setSortType',
@@ -10,50 +12,20 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: 'redirectToRoute',
   SET_USER: 'setUser',
   LOAD_COMMENTS: 'loadComments',
+  SET_COMMENT_FORM_IS_LOADING: 'setCommentFormIsLoading',
+  SET_COMMENT_FORM_ERROR: 'setCommentFormError',
 };
 
-export const ActionCreator = {
-  setCity: (payload) => ({
-    type: ActionType.SET_CITY,
-    payload,
-  }),
-  setSortType: (payload) => ({
-    type: ActionType.SET_SORT_TYPE,
-    payload,
-  }),
-  setActiveCardId: (payload) => ({
-    type: ActionType.SET_ACTIVE_CARD_ID,
-    payload,
-  }),
-  loadOffers: (payload) => ({
-    type: ActionType.LOAD_OFFERS,
-    payload,
-  }),
-  loadOffer: (payload) => ({
-    type: ActionType.LOAD_OFFER,
-    payload,
-  }),
-  loadComments: (payload) => ({
-    type: ActionType.LOAD_COMMENTS,
-    payload,
-  }),
-  resetOffer: () => ({
-    type: ActionType.RESET_OFFER,
-  }),
-  requireAuthorization: (payload) => ({
-    type: ActionType.REQUIRE_AUTHORIZATION,
-    payload,
-  }),
-  setUser: (payload) => ({
-    type: ActionType.SET_USER,
-    payload,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
-};
-
+export const setCity = createAction(ActionType.SET_CITY);
+export const setSortType = createAction(ActionType.SET_SORT_TYPE);
+export const setActiveCardId = createAction(ActionType.SET_ACTIVE_CARD_ID);
+export const loadOffers = createAction(ActionType.LOAD_OFFERS);
+export const loadOffer = createAction(ActionType.LOAD_OFFER);
+export const loadComments = createAction(ActionType.LOAD_COMMENTS);
+export const resetOffer = createAction(ActionType.RESET_OFFER);
+export const requireAuthorization = createAction(ActionType.REQUIRE_AUTHORIZATION);
+export const setUser = createAction(ActionType.SET_USER);
+export const logout = createAction(ActionType.LOGOUT);
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE);
+export const setCommentFormIsLoading = createAction(ActionType.SET_COMMENT_FORM_IS_LOADING);
+export const setCommentFormError = createAction(ActionType.SET_COMMENT_FORM_ERROR);

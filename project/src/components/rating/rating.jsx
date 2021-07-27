@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 
 const STARS_COUNT = 5;
 
-function Rating({className, rating}) {
+function Rating(props) {
+  const {
+    className,
+    rating,
+  } = props;
   const percentageRating = 100 / STARS_COUNT * rating;
 
   return (
