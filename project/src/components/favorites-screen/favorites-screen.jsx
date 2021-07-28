@@ -12,7 +12,7 @@ function FavoritesScreen() {
   const contentIsEmpty = offers.length === 0;
   useEffect(() => {
     dispatch(getFavoriteOffersList());
-  }, []);
+  }, [dispatch]);
 
   return (
     <React.Fragment>
