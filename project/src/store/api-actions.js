@@ -7,7 +7,8 @@ import {
   logout as closeSession,
   loadComments,
   setCommentFormIsLoading,
-  setCommentFormError
+  setCommentFormError,
+  updateOffer
 } from './action';
 import {APIRoute, AppRoute, AuthorizationStatus, HttpStatus} from '../const';
 
@@ -73,5 +74,12 @@ export const createComment = (id, payload) => (dispatch, _getState, api) => {
     .catch((error) => {
       dispatch(setCommentFormError(error.response.data.error));
       dispatch(setCommentFormIsLoading(false));
+    });
+};
+
+export const toggleFavoriteStatus = (id, value) => (dispatch, _getState, api) => {
+  api.post(`${APIRoute.FAVORITE}/${id}/${value}`)
+    .then((res) => {
+      dispatch(updateOffer(res.data));
     });
 };

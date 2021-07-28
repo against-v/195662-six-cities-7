@@ -11,6 +11,7 @@ import Rating from '../rating/rating';
 import {sortComments} from '../../utils';
 import {getComments, getNearbyOffers, getOffer as getCurrentOffer} from '../../store/offer/selectors';
 import {useParams} from 'react-router-dom';
+import {useToggleFavoriteStatus} from '../../hooks/use-toggle-favorite-status/use-toggle-favorite-status';
 
 const getAvatarWrapperClassName = (status) => {
   const defaultClassName = 'property__avatar-wrapper  user__avatar-wrapper';
@@ -25,6 +26,7 @@ function OfferScreen() {
   const comments = useSelector(getComments);
   const dispatch = useDispatch();
   const {id} = useParams();
+  const [handleToggleFavoriteStatus] = useToggleFavoriteStatus();
 
   useEffect(() => {
     dispatch(getOffer(id));
@@ -43,6 +45,7 @@ function OfferScreen() {
     title,
     images,
     isPremium,
+    isFavorite,
     rating,
     type,
     bedroomCount,
@@ -83,7 +86,11 @@ function OfferScreen() {
               <h1 className="property__name">
                 {title}
               </h1>
-              <button className="property__bookmark-button button" type="button">
+              <button
+                className={`${isFavorite ? 'property__bookmark-button--active' : ''} property__bookmark-button button`}
+                type="button"
+                onClick={(e) => handleToggleFavoriteStatus(e, id, isFavorite)}
+              >
                 <svg className="property__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
                 </svg>

@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {loadComments, loadOffer, loadOffers, resetOffer, setCommentFormError, setCommentFormIsLoading} from '../action';
+import {loadComments, loadOffer, loadOffers, resetOffer, setCommentFormError, setCommentFormIsLoading, updateOffer} from '../action';
 import {adaptCommentToClient, adaptOfferToClient} from '../../adapters';
 
 const initialState = {
@@ -37,6 +37,21 @@ const offer = createReducer(initialState, (builder) => {
     })
     .addCase(setCommentFormError, (state, action) => {
       state.commentFormError = action.payload;
+    })
+    .addCase(updateOffer, (state, action) => {
+      const updatedOffer = adaptOfferToClient(action.payload);
+
+      const indexInOffers = state.offers.findIndex((item) => item.id === updatedOffer.id);
+      state.offers[indexInOffers] = updatedOffer;
+
+      const indexInNearbyOffers = state.nearbyOffers.findIndex((item) => item.id === updatedOffer.id);
+      if (indexInNearbyOffers > -1) {
+        state.nearbyOffers[indexInNearbyOffers] = updatedOffer;
+      }
+
+      if (state.offer?.id === updatedOffer.id) {
+        state.offer = updatedOffer;
+      }
     });
 });
 

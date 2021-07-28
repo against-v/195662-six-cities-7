@@ -5,6 +5,8 @@ import {AppRoute} from '../../const';
 import PropTypes from 'prop-types';
 import cardOfferProp from './offer-card.prop';
 import Rating from '../rating/rating';
+import {useToggleFavoriteStatus} from '../../hooks/use-toggle-favorite-status/use-toggle-favorite-status';
+
 
 function OfferCard(props) {
   const {
@@ -15,6 +17,13 @@ function OfferCard(props) {
     imageWidth = '260',
     imageHeight = '200',
   } = props;
+
+  const handleMouseEvent = (cardValue) => {
+    if (mouseEventHandler) {
+      mouseEventHandler(cardValue);
+    }
+  };
+
   const {
     id,
     isPremium,
@@ -26,11 +35,7 @@ function OfferCard(props) {
     type,
   } = offer;
 
-  const handleMouseEvent = (cardValue) => {
-    if (mouseEventHandler) {
-      mouseEventHandler(cardValue);
-    }
-  };
+  const [handleToggleFavoriteStatus] = useToggleFavoriteStatus();
 
   return (
     <article
@@ -65,6 +70,7 @@ function OfferCard(props) {
           <button
             className={`${isFavorite ? 'place-card__bookmark-button--active' : ''} place-card__bookmark-button button`}
             type="button"
+            onClick={(e) => handleToggleFavoriteStatus(e, id, isFavorite)}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
