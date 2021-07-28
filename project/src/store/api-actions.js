@@ -1,5 +1,6 @@
 import {
   loadOffers,
+  loadFavoriteOffers,
   loadOffer,
   redirectToRoute,
   setUser,
@@ -82,4 +83,9 @@ export const toggleFavoriteStatus = (id, value) => (dispatch, _getState, api) =>
     .then((res) => {
       dispatch(updateOffer(res.data));
     });
+};
+
+export const getFavoriteOffersList = () => (dispatch, _getState, api) => {
+  api.get(APIRoute.FAVORITE)
+    .then(({data}) => dispatch(loadFavoriteOffers(data)));
 };

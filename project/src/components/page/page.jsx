@@ -50,7 +50,7 @@ function Page(props) {
           exact
           path={AppRoute.FAVORITES}
           render={() => (
-            <FavoritesScreen offers={offers}/>
+            <FavoritesScreen/>
           )}
         >
         </PrivateRoute>
