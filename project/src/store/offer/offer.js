@@ -8,7 +8,7 @@ import {
   resetOffer,
   setCommentFormError,
   setCommentFormIsLoading,
-  updateOffer
+  updateFavoriteList
 } from '../action';
 import {adaptCommentToClient, adaptOfferToClient} from '../../adapters';
 
@@ -51,24 +51,13 @@ const offer = createReducer(initialState, (builder) => {
     .addCase(setCommentFormError, (state, action) => {
       state.commentFormError = action.payload;
     })
-    .addCase(updateOffer, (state, action) => {
+    .addCase(updateFavoriteList, (state, action) => {
       const updatedOffer = adaptOfferToClient(action.payload);
-
-      const indexInOffers = state.offers.findIndex((item) => item.id === updatedOffer.id);
-      state.offers[indexInOffers] = updatedOffer;
-
-      const indexInNearbyOffers = state.nearbyOffers.findIndex((item) => item.id === updatedOffer.id);
-      if (indexInNearbyOffers > -1) {
-        state.nearbyOffers[indexInNearbyOffers] = updatedOffer;
-      }
-
       const indexInFavoriteOffers = state.favoriteOffers.findIndex((item) => item.id === updatedOffer.id);
       if (indexInFavoriteOffers > -1) {
         state.favoriteOffers.splice(indexInFavoriteOffers, 1);
-      }
-
-      if (state.offer?.id === updatedOffer.id) {
-        state.offer = updatedOffer;
+      } else {
+        state.favoriteOffers.push(updatedOffer);
       }
     });
 });

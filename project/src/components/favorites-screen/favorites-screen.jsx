@@ -1,18 +1,13 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import EmptyContent from './empty-content/empty-content';
 import Content from './content/content';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {getFavoriteOffers} from '../../store/offer/selectors';
-import {getFavoriteOffersList} from '../../store/api-actions';
 
 function FavoritesScreen() {
   const offers = useSelector(getFavoriteOffers);
-  const dispatch = useDispatch();
   const contentIsEmpty = offers.length === 0;
-  useEffect(() => {
-    dispatch(getFavoriteOffersList());
-  }, [dispatch]);
 
   return (
     <React.Fragment>

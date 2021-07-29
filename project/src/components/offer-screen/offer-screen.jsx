@@ -3,15 +3,13 @@ import {useSelector, useDispatch} from 'react-redux';
 import CommentsList from '../comments-list/comments-list';
 import InteractiveMap from '../interactive-map/interactive-map';
 import {getOffer} from '../../store/api-actions';
-
-import OffersList from '../offers-list/offers-list';
 import Preloader from '../preloader/preloader';
 import {resetOffer} from '../../store/action';
 import Rating from '../rating/rating';
 import {sortComments} from '../../utils';
 import {getComments, getNearbyOffers, getOffer as getCurrentOffer} from '../../store/offer/selectors';
 import {useParams} from 'react-router-dom';
-import {useToggleFavoriteStatus} from '../../hooks/use-toggle-favorite-status/use-toggle-favorite-status';
+import {useFavoriteButton} from '../../hooks/use-favorite-button/use-favorite-button';
 
 const getAvatarWrapperClassName = (status) => {
   const defaultClassName = 'property__avatar-wrapper  user__avatar-wrapper';
@@ -26,8 +24,7 @@ function OfferScreen() {
   const comments = useSelector(getComments);
   const dispatch = useDispatch();
   const {id} = useParams();
-  const [handleToggleFavoriteStatus] = useToggleFavoriteStatus();
-
+  const [handleToggleFavoriteStatus, isFavorite] = useFavoriteButton(Number(id));
   useEffect(() => {
     dispatch(getOffer(id));
     return () => {
@@ -45,7 +42,6 @@ function OfferScreen() {
     title,
     images,
     isPremium,
-    isFavorite,
     rating,
     type,
     bedroomCount,
@@ -89,7 +85,7 @@ function OfferScreen() {
               <button
                 className={`${isFavorite ? 'property__bookmark-button--active' : ''} property__bookmark-button button`}
                 type="button"
-                onClick={(e) => handleToggleFavoriteStatus(e, id, isFavorite)}
+                onClick={(e) => handleToggleFavoriteStatus(e)}
               >
                 <svg className="property__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
@@ -177,10 +173,10 @@ function OfferScreen() {
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <OffersList
-            className="near-places__list places__list"
-            offers={nearbyOffers}
-          />
+          {/*<OffersList*/}
+          {/*  className="near-places__list places__list"*/}
+          {/*  offers={nearbyOffers}*/}
+          {/*/>*/}
         </section>
       </div>
     </main>
