@@ -13,8 +13,7 @@ function App() {
   const offers = useSelector(getOffers);
   const offersAreLoaded = useSelector(getOffersAreLoaded);
   const authorizationStatus = useSelector(getAuthorizationStatus);
-
-  if (authorizationStatus === AuthorizationStatus.UNKNOWN && !offersAreLoaded) {
+  if (authorizationStatus === AuthorizationStatus.UNKNOWN || !offersAreLoaded) {
     return (
       <Preloader/>
     );
