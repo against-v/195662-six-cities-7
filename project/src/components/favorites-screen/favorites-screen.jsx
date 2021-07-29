@@ -1,38 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import cardOfferProp from '../offer-card/offer-card.prop';
-import OfferCardFavorites from '../offer-card-favorites/offer-card-favorites';
+import EmptyContent from './empty-content/empty-content';
+import Content from './content/content';
+import {useSelector} from 'react-redux';
+import {getFavoriteOffers} from '../../store/offer/selectors';
 
-function FavoritesScreen({offers}) {
+function FavoritesScreen() {
+  const offers = useSelector(getFavoriteOffers);
+  const contentIsEmpty = offers.length === 0;
+
   return (
     <React.Fragment>
-      <main className="page__main page__main--favorites">
+      <main
+        className={`${contentIsEmpty ? 'page__main--favorites-empty' : ''} page__main page__main--favorites`}
+      >
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="/">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <div className="favorites__places">
-                  {
-                    offers.map((item) => (
-                      <OfferCardFavorites
-                        key={item.id}
-                        offer={item}
-                      />
-                    ))
-                  }
-                </div>
-              </li>
-            </ul>
-          </section>
+          {
+            contentIsEmpty ?
+              <EmptyContent/>
+              :
+              <Content/>
+          }
         </div>
       </main>
       <footer className="footer container">
@@ -43,9 +31,5 @@ function FavoritesScreen({offers}) {
     </React.Fragment>
   );
 }
-
-FavoritesScreen.propTypes = {
-  offers: PropTypes.arrayOf(cardOfferProp).isRequired,
-};
 
 export default FavoritesScreen;

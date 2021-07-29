@@ -1,10 +1,20 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {loadComments, loadOffer, loadOffers, resetOffer, setCommentFormError, setCommentFormIsLoading} from '../action';
+import {
+  loadComments,
+  loadOffer,
+  loadOffers,
+  loadFavoriteOffers,
+  resetOffer,
+  setCommentFormError,
+  setCommentFormIsLoading,
+  updateFavoriteList
+} from '../action';
 import {adaptCommentToClient, adaptOfferToClient} from '../../adapters';
 
 const initialState = {
   offers: [],
+  favoriteOffers: [],
   offersAreLoaded: false,
   offer: null,
   nearbyOffers: [],
@@ -18,6 +28,9 @@ const offer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload.map((item) => adaptOfferToClient(item));
       state.offersAreLoaded = true;
+    })
+    .addCase(loadFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload.map((item) => adaptOfferToClient(item));
     })
     .addCase(loadOffer, (state, action) => {
       state.offer = adaptOfferToClient(action.payload.offer);
@@ -37,6 +50,15 @@ const offer = createReducer(initialState, (builder) => {
     })
     .addCase(setCommentFormError, (state, action) => {
       state.commentFormError = action.payload;
+    })
+    .addCase(updateFavoriteList, (state, action) => {
+      const updatedOffer = adaptOfferToClient(action.payload);
+      const indexInFavoriteOffers = state.favoriteOffers.findIndex((item) => item.id === updatedOffer.id);
+      if (indexInFavoriteOffers > -1) {
+        state.favoriteOffers.splice(indexInFavoriteOffers, 1);
+      } else {
+        state.favoriteOffers.push(updatedOffer);
+      }
     });
 });
 

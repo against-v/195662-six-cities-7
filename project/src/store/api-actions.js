@@ -1,5 +1,6 @@
 import {
   loadOffers,
+  loadFavoriteOffers,
   loadOffer,
   redirectToRoute,
   setUser,
@@ -7,9 +8,18 @@ import {
   logout as closeSession,
   loadComments,
   setCommentFormIsLoading,
-  setCommentFormError
+  setCommentFormError,
+  updateFavoriteList
 } from './action';
 import {APIRoute, AppRoute, AuthorizationStatus, HttpStatus} from '../const';
+
+const handleSuccessAuth = (api, dispatch, userData) => {
+  dispatch(setUser(userData));
+  api.get(APIRoute.FAVORITE).then(({data}) => {
+    dispatch(loadFavoriteOffers(data));
+    dispatch(requireAuthorization(AuthorizationStatus.AUTH));
+  });
+};
 
 export const getOffersList = () => (dispatch, _getState, api) => {
   api.get(APIRoute.HOTELS)
@@ -39,8 +49,7 @@ export const getOffer = (id) => (dispatch, _getState, api) => {
 export const checkAuth = () => (dispatch, _getState, api) => {
   api.get(APIRoute.LOGIN)
     .then(({data}) => {
-      dispatch(setUser(data));
-      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
+      handleSuccessAuth(api, dispatch, data);
     })
     .catch(() => {});
 };
@@ -49,9 +58,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post(APIRoute.LOGIN, {email, password})
     .then(({data}) => {
       localStorage.setItem('token', data.token);
-      dispatch(setUser(data));
-      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
-      dispatch(redirectToRoute(AppRoute.ROOT));
+      handleSuccessAuth(api, dispatch, data);
     });
 };
 
@@ -75,3 +82,11 @@ export const createComment = (id, payload) => (dispatch, _getState, api) => {
       dispatch(setCommentFormIsLoading(false));
     });
 };
+
+export const toggleFavoriteStatus = (id, value) => (dispatch, _getState, api) => {
+  api.post(`${APIRoute.FAVORITE}/${id}/${value}`)
+    .then((res) => {
+      dispatch(updateFavoriteList(res.data));
+    });
+};
+
