@@ -87,6 +87,7 @@ export const createComment = (id, payload) => (dispatch, _getState, api) => {
     })
     .catch((error) => {
       dispatch(setCommentFormError(error.response.data.error));
+      dispatch(showNotificationModal(error.response.data.error));
       dispatch(setCommentFormIsLoading(false));
     });
 };
