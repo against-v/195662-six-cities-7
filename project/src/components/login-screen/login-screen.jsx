@@ -3,7 +3,7 @@ import {Redirect} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {login} from '../../store/api-actions';
 import {AppRoute} from '../../const';
-import {useLogin} from '../../hooks/use-login/useLogin';
+import {useLogin} from '../../hooks/use-login/use-login';
 import {getIsAuthorized} from '../../store/user/selectors';
 
 function LoginScreen() {

@@ -2,7 +2,7 @@ import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {createComment} from '../../store/api-actions';
 import {setCommentFormIsLoading, setCommentFormError} from '../../store/action';
-import {useCommentForm} from '../../hooks/use-comment-form/useCommentForm';
+import {useCommentForm} from '../../hooks/use-comment-form/use-comment-form';
 import {getCommentFormError, getCommentFormIsLoading} from '../../store/offer/selectors';
 
 function CommentForm() {

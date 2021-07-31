@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {SortType} from '../../const';
 import {setSortType} from '../../store/action';
-import {useSorting} from '../../hooks/use-sorting/useSorting';
+import {useSorting} from '../../hooks/use-sorting/use-sorting';
 import {getSortType} from '../../store/other/selectors';
 
 const getOptionClassName = (sortTypeId, currentSortTypeId) => {
