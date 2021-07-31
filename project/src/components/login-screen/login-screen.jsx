@@ -1,19 +1,14 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
-import {useSelector, useDispatch} from 'react-redux';
-import {login} from '../../store/api-actions';
+import {useSelector} from 'react-redux';
 import {AppRoute} from '../../const';
 import {useLogin} from '../../hooks/use-login/use-login';
 import {getIsAuthorized} from '../../store/user/selectors';
 
 function LoginScreen() {
   const isAuthorized = useSelector(getIsAuthorized);
-  const dispatch = useDispatch();
-  const onSubmit = (authData) => {
-    dispatch(login(authData));
-  };
 
-  const [loginRef, passwordRef, handleSubmit] = useLogin(onSubmit);
+  const [loginRef, passwordRef, handleSubmit] = useLogin();
 
   if (isAuthorized) {
     return (

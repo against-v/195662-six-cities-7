@@ -17,6 +17,8 @@ export const ActionType = {
   SET_COMMENT_FORM_ERROR: 'setCommentFormError',
   UPDATE_OFFER: 'updateOffer',
   UPDATE_FAVORITE_LIST: 'updateFavoriteList',
+  SHOW_NOTIFICATION_MODAL: 'showNotificationModal',
+  HIDE_NOTIFICATION_MODAL: 'hideNotificationModal',
 };
 
 export const setCity = createAction(ActionType.SET_CITY);
@@ -35,3 +37,5 @@ export const setCommentFormIsLoading = createAction(ActionType.SET_COMMENT_FORM_
 export const setCommentFormError = createAction(ActionType.SET_COMMENT_FORM_ERROR);
 export const updateOffer = createAction(ActionType.UPDATE_OFFER);
 export const updateFavoriteList = createAction(ActionType.UPDATE_FAVORITE_LIST);
+export const showNotificationModal = createAction(ActionType.SHOW_NOTIFICATION_MODAL);
+export const hideNotificationModal = createAction(ActionType.HIDE_NOTIFICATION_MODAL);

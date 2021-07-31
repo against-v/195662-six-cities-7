@@ -103,3 +103,8 @@ export const HttpStatus = {
   NOT_FOUND: 404,
   SERVER_ERROR: 500,
 };
+
+export const LoginNotification = {
+  EMAIL: 'Email is invalid',
+  PASSWORD: 'Password is invalid',
+};

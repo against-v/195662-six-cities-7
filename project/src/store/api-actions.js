@@ -9,9 +9,9 @@ import {
   loadComments,
   setCommentFormIsLoading,
   setCommentFormError,
-  updateFavoriteList
+  updateFavoriteList, showNotificationModal
 } from './action';
-import {APIRoute, AppRoute, AuthorizationStatus, HttpStatus} from '../const';
+import {APIRoute, AppRoute, AuthorizationStatus, HttpStatus, LoginNotification} from '../const';
 
 const handleSuccessAuth = (api, dispatch, userData) => {
   dispatch(setUser(userData));
@@ -59,6 +59,11 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(({data}) => {
       localStorage.setItem('token', data.token);
       handleSuccessAuth(api, dispatch, data);
+    })
+    .catch((error) => {
+      if (error.response.status === HttpStatus.BAD_REQUEST) {
+        dispatch(showNotificationModal(LoginNotification.EMAIL));
+      }
     });
 };
 
