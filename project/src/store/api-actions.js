@@ -9,7 +9,9 @@ import {
   loadComments,
   setCommentFormIsLoading,
   setCommentFormError,
-  updateFavoriteList, showNotificationModal
+  updateFavoriteList,
+  showNotificationModal,
+  resetFavoriteOffers
 } from './action';
 import {APIRoute, AppRoute, AuthorizationStatus, HttpStatus, Notification} from '../const';
 
@@ -72,6 +74,7 @@ export const logout = () => (dispatch, _getState, api) => {
     .then(() => {
       localStorage.removeItem('token');
       dispatch(closeSession());
+      dispatch(resetFavoriteOffers());
       dispatch(redirectToRoute(AppRoute.ROOT));
     });
 };
