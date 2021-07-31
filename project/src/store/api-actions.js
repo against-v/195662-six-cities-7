@@ -11,7 +11,7 @@ import {
   setCommentFormError,
   updateFavoriteList, showNotificationModal
 } from './action';
-import {APIRoute, AppRoute, AuthorizationStatus, HttpStatus, LoginNotification} from '../const';
+import {APIRoute, AppRoute, AuthorizationStatus, HttpStatus, Notification} from '../const';
 
 const handleSuccessAuth = (api, dispatch, userData) => {
   dispatch(setUser(userData));
@@ -62,7 +62,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     })
     .catch((error) => {
       if (error.response.status === HttpStatus.BAD_REQUEST) {
-        dispatch(showNotificationModal(LoginNotification.EMAIL));
+        dispatch(showNotificationModal(Notification.INVALID_EMAIL));
       }
     });
 };

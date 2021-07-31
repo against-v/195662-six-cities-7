@@ -7,12 +7,13 @@ import {createAPI} from './api';
 import {checkAuth, getOffersList} from './store/api-actions';
 import rootReducer from './store/root-reducer';
 import App from './components/app/app';
-import {requireAuthorization} from './store/action';
+import {requireAuthorization, showNotificationModal} from './store/action';
 import {redirect} from './store/middlewares/redirect';
-import {AuthorizationStatus} from './const';
+import {AuthorizationStatus, Notification} from './const';
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
+  () => store.dispatch(showNotificationModal(Notification.SERVER_ERROR)),
 );
 
 const store = configureStore({

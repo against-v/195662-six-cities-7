@@ -2,7 +2,7 @@ import {useRef} from 'react';
 import {useDispatch} from 'react-redux';
 import {showNotificationModal} from '../../store/action';
 import {login} from '../../store/api-actions';
-import {LoginNotification} from '../../const';
+import {Notification} from '../../const';
 
 export const useLogin = () => {
   const loginRef = useRef();
@@ -25,7 +25,7 @@ export const useLogin = () => {
         password,
       }));
     } else {
-      dispatch(showNotificationModal(LoginNotification.PASSWORD));
+      dispatch(showNotificationModal(Notification.INVALID_PASSWORD));
     }
   };
 
