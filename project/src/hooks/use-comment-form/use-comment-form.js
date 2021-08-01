@@ -8,7 +8,7 @@ import {getCommentFormError} from '../../store/offer/selectors';
 const MIN_LENGTH = 50;
 const MAX_LENGTH = 300;
 
-const ratingValues = [5, 4, 3, 2, 1];
+const RATING_VALUES = [5, 4, 3, 2, 1];
 
 const getSubmitDisabledStatus = (commentLength, rating) => {
   const validLength = commentLength >= MIN_LENGTH && commentLength < MAX_LENGTH;
@@ -65,7 +65,7 @@ export const useCommentForm = (props) => {
   }, [formIsLoading, error]);
 
   return [
-    ratingValues,
+    RATING_VALUES,
     data,
     submitDisabled,
     handleFieldChange,
