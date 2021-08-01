@@ -109,4 +109,5 @@ export const Notification = {
   INVALID_EMAIL: 'Email is invalid',
   INVALID_PASSWORD: 'Password is invalid',
   SERVER_ERROR: 'Server error',
+  OFFLINE: 'Network Error. Check your internet connection.',
 };

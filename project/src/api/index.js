@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {HttpStatus} from '../const';
+import {HttpStatus, Notification} from '../const';
 
 const BACKEND_URL = 'https://7.react.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
@@ -14,14 +14,22 @@ export const createAPI = (onUnauthorized, onServerError) => {
 
   const onFail = (err) => {
     const {response} = err;
+    if (!response) {
+      err.response = {
+        data: {
+          error: Notification.OFFLINE,
+        },
+      };
+    }
 
-    if (response.status === HttpStatus.UNAUTHORIZED) {
+    if (response?.status === HttpStatus.UNAUTHORIZED) {
       onUnauthorized();
     }
 
-    if (response.status === HttpStatus.SERVER_ERROR) {
+    if (response?.status === HttpStatus.SERVER_ERROR) {
       onServerError();
     }
+
 
     throw err;
   };
