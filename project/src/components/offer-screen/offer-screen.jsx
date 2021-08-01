@@ -5,7 +5,7 @@ import InteractiveMap from '../interactive-map/interactive-map';
 import {getOffer} from '../../store/api-actions';
 import OffersList from '../offers-list/offers-list';
 import Preloader from '../preloader/preloader';
-import {resetOffer} from '../../store/action';
+import {resetOffer, setActiveCardId} from '../../store/action';
 import Rating from '../rating/rating';
 import {sortComments} from '../../utils';
 import {getComments, getNearbyOffers, getOffer as getCurrentOffer} from '../../store/offer/selectors';
@@ -22,14 +22,18 @@ const getActualComments = (comments) => sortComments(comments).slice(0, 10);
 function OfferScreen() {
   const offer = useSelector(getCurrentOffer);
   const nearbyOffers = useSelector(getNearbyOffers);
+
+  const offersOnMap = [offer].concat(nearbyOffers);
   const comments = useSelector(getComments);
   const dispatch = useDispatch();
   const {id} = useParams();
   const [handleToggleFavoriteStatus, isFavorite] = useFavoriteButton(Number(id));
   useEffect(() => {
     dispatch(getOffer(id));
+    dispatch(setActiveCardId(Number(id)));
     return () => {
       dispatch(resetOffer());
+      dispatch(setActiveCardId(null));
     };
   }, [id, dispatch]);
 
@@ -166,7 +170,7 @@ function OfferScreen() {
         </div>
         <section className="property__map map">
           <InteractiveMap
-            points={nearbyOffers}
+            points={offersOnMap}
             defaultLocation={cityLocation}
           />
         </section>
@@ -177,6 +181,7 @@ function OfferScreen() {
           <OffersList
             className="near-places__list places__list"
             offers={nearbyOffers}
+            disabledHandleSetActiveCardId
           />
         </section>
       </div>

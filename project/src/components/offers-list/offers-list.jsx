@@ -10,10 +10,14 @@ function OffersList(props) {
   const {
     offers,
     className,
+    disabledHandleSetActiveCardId,
   } = props;
 
   const dispatch = useDispatch();
   const handleSetActiveCardId = (activeCard) => {
+    if (disabledHandleSetActiveCardId) {
+      return;
+    }
     dispatch(setActiveCardId(activeCard));
   };
 
@@ -35,6 +39,7 @@ function OffersList(props) {
 OffersList.propTypes = {
   className: PropTypes.string,
   offers: PropTypes.arrayOf(cardOfferProp).isRequired,
+  disabledHandleSetActiveCardId: PropTypes.bool,
 };
 
 export default OffersList;
