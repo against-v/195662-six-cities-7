@@ -32,7 +32,6 @@ export const createAPI = (onUnauthorized, onServerError) => {
       onServerError();
     }
 
-
     throw err;
   };
 
