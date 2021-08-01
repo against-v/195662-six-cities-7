@@ -1,0 +1,25 @@
+.notification-modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  z-index: 400;
+}
+.notification-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 10px;
+}
+.notification-modal__button {
+  color: #fff;
+  background-color: #4481c3;
+  border-radius: 3px;
+  width: 100%;
+  padding: 16px 20px 13px;
+}

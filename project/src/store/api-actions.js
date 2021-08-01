@@ -9,9 +9,11 @@ import {
   loadComments,
   setCommentFormIsLoading,
   setCommentFormError,
-  updateFavoriteList
+  updateFavoriteList,
+  showNotificationModal,
+  resetFavoriteOffers
 } from './action';
-import {APIRoute, AppRoute, AuthorizationStatus, HttpStatus} from '../const';
+import {APIRoute, AppRoute, AuthorizationStatus, HttpStatus, Notification} from '../const';
 
 const handleSuccessAuth = (api, dispatch, userData) => {
   dispatch(setUser(userData));
@@ -59,6 +61,11 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(({data}) => {
       localStorage.setItem('token', data.token);
       handleSuccessAuth(api, dispatch, data);
+    })
+    .catch((error) => {
+      if (error.response.status === HttpStatus.BAD_REQUEST) {
+        dispatch(showNotificationModal(Notification.INVALID_EMAIL));
+      }
     });
 };
 
@@ -67,6 +74,7 @@ export const logout = () => (dispatch, _getState, api) => {
     .then(() => {
       localStorage.removeItem('token');
       dispatch(closeSession());
+      dispatch(resetFavoriteOffers());
       dispatch(redirectToRoute(AppRoute.ROOT));
     });
 };
@@ -79,6 +87,7 @@ export const createComment = (id, payload) => (dispatch, _getState, api) => {
     })
     .catch((error) => {
       dispatch(setCommentFormError(error.response.data.error));
+      dispatch(showNotificationModal(error.response.data.error));
       dispatch(setCommentFormIsLoading(false));
     });
 };

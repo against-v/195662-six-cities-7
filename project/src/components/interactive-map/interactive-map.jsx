@@ -8,7 +8,7 @@ import locationProp from '../main-screen/location.prop';
 
 import {UrlMapPin} from '../../const';
 
-import useInteractiveMap from '../../hooks/use-interactiv-map/useInteractiveMap';
+import useInteractiveMap from '../../hooks/use-interactiv-map/use-interactive-map';
 import {getActiveCardId} from '../../store/other/selectors';
 
 function InteractiveMap(props) {

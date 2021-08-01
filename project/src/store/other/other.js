@@ -1,12 +1,14 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {setActiveCardId, setCity, setSortType} from '../action';
+import {setActiveCardId, setCity, setSortType, showNotificationModal, hideNotificationModal} from '../action';
 import {City, SortType} from '../../const';
 
 const initialState = {
   city: City.PARIS,
   sortType: SortType.POPULAR,
   activeCardId: null,
+  showNotificationModal: false,
+  notificationText: '',
 };
 
 const other = createReducer(initialState, (builder) => {
@@ -19,6 +21,14 @@ const other = createReducer(initialState, (builder) => {
     })
     .addCase(setActiveCardId, (state, action) => {
       state.activeCardId = action.payload;
+    })
+    .addCase(showNotificationModal, (state, action) => {
+      state.showNotificationModal = true;
+      state.notificationText = action.payload;
+    })
+    .addCase(hideNotificationModal, (state, action) => {
+      state.showNotificationModal = false;
+      state.notificationText = '';
     });
 });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route, Switch, useLocation} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {useSelector} from 'react-redux';
 
 import MainScreen from '../main-screen/main-screen';
 import LoginScreen from '../login-screen/login-screen';
@@ -12,6 +13,9 @@ import PrivateRoute from '../private-route/private-route';
 import cardOfferProp from '../offer-card/offer-card.prop';
 import {AppRoute} from '../../const';
 import Header from '../header/header';
+import NotificationModal from '../notification-modal/notification-modal';
+import {getShowNotificationModal} from '../../store/other/selectors';
+
 
 const setPageClassName = (path) => {
   const className = 'page';
@@ -33,6 +37,7 @@ function Page(props) {
   const location = useLocation();
 
   const pageClassName = setPageClassName(location.pathname);
+  const showNotificationModal = useSelector(getShowNotificationModal);
 
   return (
     <div className={pageClassName}>
@@ -61,6 +66,7 @@ function Page(props) {
           <NotFoundScreen/>
         </Route>
       </Switch>
+      {showNotificationModal && <NotificationModal/>}
     </div>
   );
 }

@@ -1,23 +1,10 @@
 import React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {createComment} from '../../store/api-actions';
-import {setCommentFormIsLoading, setCommentFormError} from '../../store/action';
-import {useCommentForm} from '../../hooks/use-comment-form/useCommentForm';
-import {getCommentFormError, getCommentFormIsLoading} from '../../store/offer/selectors';
+import {useSelector} from 'react-redux';
+import {useCommentForm} from '../../hooks/use-comment-form/use-comment-form';
+import {getCommentFormIsLoading} from '../../store/offer/selectors';
 
 function CommentForm() {
   const formIsLoading = useSelector(getCommentFormIsLoading);
-  const error = useSelector(getCommentFormError);
-  const dispatch = useDispatch();
-  const onSubmit = (id, commentData) => {
-    dispatch(createComment(id, commentData));
-  };
-  const setFormDisabled = () => {
-    dispatch(setCommentFormIsLoading(true));
-  };
-  const resetError = () => {
-    dispatch(setCommentFormError(null));
-  };
 
   const [
     ratingValues,
@@ -27,10 +14,6 @@ function CommentForm() {
     handleSubmit,
   ] = useCommentForm({
     formIsLoading,
-    error,
-    onSubmit,
-    setFormDisabled,
-    resetError,
   });
 
   return (
@@ -85,16 +68,6 @@ function CommentForm() {
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={submitDisabled || formIsLoading}>Submit</button>
       </div>
-      {error &&
-      <p
-        style={{
-          color: 'red',
-          marginBottom: 0,
-        }}
-      >
-        {error}
-      </p>}
-
     </form>
   );
 }

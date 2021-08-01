@@ -8,7 +8,8 @@ import {
   resetOffer,
   setCommentFormError,
   setCommentFormIsLoading,
-  updateFavoriteList
+  updateFavoriteList,
+  resetFavoriteOffers
 } from '../action';
 import {adaptCommentToClient, adaptOfferToClient} from '../../adapters';
 
@@ -31,6 +32,9 @@ const offer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFavoriteOffers, (state, action) => {
       state.favoriteOffers = action.payload.map((item) => adaptOfferToClient(item));
+    })
+    .addCase(resetFavoriteOffers, (state, action) => {
+      state.favoriteOffers = [];
     })
     .addCase(loadOffer, (state, action) => {
       state.offer = adaptOfferToClient(action.payload.offer);

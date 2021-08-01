@@ -100,6 +100,13 @@ export const HttpStatus = {
   OK: 200,
   CREATED: 201,
   BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
   NOT_FOUND: 404,
   SERVER_ERROR: 500,
+};
+
+export const Notification = {
+  INVALID_EMAIL: 'Email is invalid',
+  INVALID_PASSWORD: 'Password is invalid',
+  SERVER_ERROR: 'Server error',
 };

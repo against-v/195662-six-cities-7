@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import CommentsList from '../comments-list/comments-list';
 import InteractiveMap from '../interactive-map/interactive-map';
 import {getOffer} from '../../store/api-actions';
+import OffersList from '../offers-list/offers-list';
 import Preloader from '../preloader/preloader';
 import {resetOffer} from '../../store/action';
 import Rating from '../rating/rating';
@@ -173,10 +174,10 @@ function OfferScreen() {
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          {/*<OffersList*/}
-          {/*  className="near-places__list places__list"*/}
-          {/*  offers={nearbyOffers}*/}
-          {/*/>*/}
+          <OffersList
+            className="near-places__list places__list"
+            offers={nearbyOffers}
+          />
         </section>
       </div>
     </main>
