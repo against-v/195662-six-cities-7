@@ -14,19 +14,21 @@ export const createAPI = (onUnauthorized, onServerError) => {
 
   const onFail = (err) => {
     const {response} = err;
+
     if (!response) {
       err.response = {
         data: {
           error: Notification.OFFLINE,
         },
       };
+      throw err;
     }
 
-    if (response?.status === HttpStatus.UNAUTHORIZED) {
+    if (response.status === HttpStatus.UNAUTHORIZED) {
       onUnauthorized();
     }
 
-    if (response?.status === HttpStatus.SERVER_ERROR) {
+    if (response.status === HttpStatus.SERVER_ERROR) {
       onServerError();
     }
 
