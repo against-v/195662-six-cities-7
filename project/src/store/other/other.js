@@ -26,7 +26,7 @@ const other = createReducer(initialState, (builder) => {
       state.showNotificationModal = true;
       state.notificationText = action.payload;
     })
-    .addCase(hideNotificationModal, (state, action) => {
+    .addCase(hideNotificationModal, (state) => {
       state.showNotificationModal = false;
       state.notificationText = '';
     });

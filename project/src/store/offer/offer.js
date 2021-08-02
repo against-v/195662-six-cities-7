@@ -33,7 +33,7 @@ const offer = createReducer(initialState, (builder) => {
     .addCase(loadFavoriteOffers, (state, action) => {
       state.favoriteOffers = action.payload.map((item) => adaptOfferToClient(item));
     })
-    .addCase(resetFavoriteOffers, (state, action) => {
+    .addCase(resetFavoriteOffers, (state) => {
       state.favoriteOffers = [];
     })
     .addCase(loadOffer, (state, action) => {
